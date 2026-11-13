@@ -1,0 +1,57 @@
+{
+  "dataset": "titanic",
+  "rows": 891,
+  "features": [
+    "age",
+    "fare",
+    "sibsp",
+    "parch",
+    "pclass_1",
+    "pclass_2",
+    "pclass_3",
+    "sex_female",
+    "sex_male",
+    "embarked_C",
+    "embarked_Q",
+    "embarked_S"
+  ],
+  "matrix_sha256_rounded_10dp": "31907b85ac2eb8339712c385c8118f40d78f54c625be99dc762942679b59d7aa",
+  "sklearn_version": "1.8.0",
+  "phate_version": "2.0.0",
+  "inputs_note": "survival and missingness indicators excluded",
+  "settings": {
+    "PCA": {
+      "n_components": 2,
+      "svd_solver": "full"
+    },
+    "t-SNE": {
+      "perplexity": 30,
+      "init": "pca",
+      "learning_rate": "auto",
+      "max_iter": 1000,
+      "random_state": 42
+    },
+    "UMAP": {
+      "nNeighbors": 15,
+      "minDist": 0.1,
+      "nComponents": 2,
+      "nEpochs": 400,
+      "seed": 42,
+      "backend": "UMAP-js"
+    },
+    "PHATE": {
+      "knn": 30,
+      "t": "auto",
+      "mds_solver": "smacof",
+      "random_state": 42,
+      "n_jobs": 1
+    }
+  },
+  "provenance": {
+    "PHATE": "https://github.com/KrishnaswamyLab/PHATE/tree/65a1f73f0c53a65bf1f8db3d4ad32dbef73595c3/Python",
+    "UMAP": "https://github.com/PAIR-code/umap-js",
+    "note": "Saved UMAP uses the official JS implementation. Python recomputation code uses umap-learn and can produce a different layout."
+  },
+  "data_csv_sha256": "36e3d7ef4aff1ed8a904f93f65908277435e797a0163e254f19a6cdad82f65df",
+  "variants_note": "The t-SNE random-initialization run changes both init and seed relative to the main PCA-initialized run."
+}

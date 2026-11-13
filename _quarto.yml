@@ -1,0 +1,52 @@
+project:
+  type: website
+  output-dir: docs
+  pre-render:
+    - python scripts/prepare_downloads.py
+  post-render:
+    - python scripts/finalize_site.py
+  render:
+    - index.qmd
+    - slides.qmd
+    - notebooks.qmd
+    - methods.qmd
+    - run_details.qmd
+    - teaching_notes.qmd
+    - sources.qmd
+    - notebooks/titanic_complete.ipynb
+    - notebooks/titanic_live_scaffold.ipynb
+    - notebooks/tornado_complete.ipynb
+    - notebooks/tornado_practice.ipynb
+  resources:
+    - explorer.html
+    - data/**
+    - support/*.py
+    - notebooks/*.ipynb
+    - assets/*.png
+    - assets/plotly.js
+    - assets/PLOTLY_LICENSE.txt
+    - downloads/*.zip
+    - downloads/*.ipynb
+website:
+  title: "STAT 386: EDA Day 2"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: slides.qmd
+        text: Slides
+      - href: notebooks.qmd
+        text: Notebooks
+      - href: explorer.html
+        text: Explorer
+      - href: methods.qmd
+        text: Methods
+      - href: teaching_notes.qmd
+        text: Teaching notes
+format:
+  html:
+    theme: cosmo
+    css: assets/site.css
+    toc: true
+execute:
+  enabled: false

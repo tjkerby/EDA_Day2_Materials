@@ -1,0 +1,31 @@
+---
+title: "Sources"
+---
+
+## Methods
+
+- [scikit-learn PCA API](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html)
+- [scikit-learn t-SNE and manifold learning guide](https://scikit-learn.org/stable/modules/manifold.html#t-distributed-stochastic-neighbor-embedding-t-sne)
+- van der Maaten and Hinton (2008), [Visualizing Data using t-SNE](https://www.jmlr.org/papers/v9/vandermaaten08a.html)
+- [UMAP: how it works](https://umap-learn.readthedocs.io/en/latest/how_umap_works.html)
+- [UMAP parameters](https://umap-learn.readthedocs.io/en/latest/parameters.html)
+- [UMAP clustering cautions](https://umap-learn.readthedocs.io/en/latest/clustering.html)
+- [Official UMAP-js implementation](https://github.com/PAIR-code/umap-js)
+- [PHATE API](https://phate.readthedocs.io/en/stable/api.html)
+- Moon et al. (2019), *Visualizing Structure and Transitions in High-Dimensional Biological Data*, [author manuscript](https://pmc.ncbi.nlm.nih.gov/articles/PMC7073148/) and [DOI](https://doi.org/10.1038/s41587-019-0336-3).
+
+## Datasets
+
+- [Seaborn example data](https://github.com/mwaskom/seaborn-data)
+- [NOAA Storm Prediction Center Severe Weather Database](https://www.spc.noaa.gov/wcm/#data)
+- [Public teaching mirror of the annual tornado snapshots](https://github.com/gabrielodom/PHC6701_r4ds/tree/main/_data/purrr_example_data)
+- Local details: `data/SOURCES.md`, `data/data_dictionary.md`, and [run details](run_details.qmd).
+
+All instructional charts were created from the supplied data or explicitly labeled synthetic examples. Graph illustrations explain mechanisms and do not claim to be the exact fitted UMAP or PHATE graph.
+
+## Website
+
+- [Quarto Reveal.js](https://quarto.org/docs/presentations/revealjs/)
+- [Quarto on GitHub Pages](https://quarto.org/docs/publishing/github-pages.html)
+
+Reveal.js, UMAP-js reference-generation code, and the local Plotly runtime retain their upstream licenses or notices in the project.

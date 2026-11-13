@@ -1,0 +1,69 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Notebooks for live teaching and practice | STAT 386</title><link rel="stylesheet" href="assets/site.css"></head><body><header class="site-header"><nav aria-label="Main navigation"><a href="index.html">Home</a><a href="slides.html">Slides</a><a href="notebooks.html">Notebooks</a><a href="explorer.html">Explorer</a><a href="methods.html">Methods</a><a href="teaching_notes.html">Teaching notes</a></nav></header><main><h1>Notebooks for live teaching and practice</h1><h2 id="start-in-positron">Start in Positron</h2>
+<p>Download the full notebook-and-data folder, extract it, and open that folder in Positron. Keep <code>data/</code>, <code>support/</code>, and <code>notebooks/</code> together.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> sync</span></code></pre></div>
+<p>Select the <code>.venv</code> Python interpreter for the notebook kernel. The base environment supports the saved examples and fresh PCA/t-SNE computations. The dataset and coordinates load from local files.</p>
+<p>For fresh UMAP and PHATE fits:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> sync <span class="at">--extra</span> recompute</span></code></pre></div>
+<p>Run the completed notebook once before class if you will recompute, because Python UMAP may compile code on its first run. Set <code>RECOMPUTE = True</code> in the completed version. The live scaffold leaves the method calls for you to complete and starts with saved runs available as a fallback.</p>
+<h2 id="titanic">Titanic</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Version</th>
+<th>Notebook</th>
+<th>Browser preview</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Live scaffold</td>
+<td><a href="downloads/titanic_live_scaffold.ipynb">titanic_live_scaffold.ipynb</a></td>
+<td><a href="notebooks/titanic_live_scaffold.html">Read</a></td>
+</tr>
+<tr class="even">
+<td>Completed reference</td>
+<td><a href="downloads/titanic_complete.ipynb">titanic_complete.ipynb</a></td>
+<td><a href="notebooks/titanic_complete.html">Read</a></td>
+</tr>
+</tbody>
+</table>
+<p>Both versions use matching sections. The main path is supplied preparation, one method call for each representation, recoloring fixed coordinates, and an original-variable comparison. Optional sections cover SVD, region inspection, and parameter sensitivity.</p>
+<p>The scaffold has no saved outputs. It retains the supplied coordinates until a filled-in method cell replaces them, so you can skip a computation without breaking later plotting cells. The completed notebook shows the actual fitting code inside <code>RECOMPUTE</code> branches as well as the saved results.</p>
+<h2 id="optional-tornado-practice">Optional tornado practice</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Version</th>
+<th>Notebook</th>
+<th>Browser preview</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Practice</td>
+<td><a href="downloads/tornado_practice.ipynb">tornado_practice.ipynb</a></td>
+<td><a href="notebooks/tornado_practice.html">Read</a></td>
+</tr>
+<tr class="even">
+<td>Completed reference</td>
+<td><a href="downloads/tornado_complete.ipynb">tornado_complete.ipynb</a></td>
+<td><a href="notebooks/tornado_complete.html">Read</a></td>
+</tr>
+</tbody>
+</table>
+<p>The fixed sample has 700 records. Embedding inputs are standardized log1p track length, log1p maximum width, starting latitude, and starting longitude. EF rating, time, and outcomes remain outside the inputs. The sample is for exploration, not population risk estimation.</p>
+<p>The final practice questions ask students to compare the embeddings with original measurements and consider how geography changes the definition of similarity.</p>
+<h2 id="saved-run-provenance">Saved-run provenance</h2>
+<p>The saved PCA and t-SNE runs use scikit-learn. PHATE uses its Python implementation. Saved UMAP uses the official UMAP-js implementation because Python UMAP was unavailable in the authoring environment. The fitting code supplied for Python uses <code>umap-learn</code>; those results can differ from the saved layouts.</p>
+<p>All saved coordinates are real computations on the documented feature matrices. Row identities and a feature-matrix fingerprint are checked before loading. Changed preparation requires recomputation. See <a href="run_details.html">run details</a>.</p>
+</main><footer>STAT 386 · Exploratory Data Analysis</footer></body></html>

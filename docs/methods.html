@@ -1,0 +1,73 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Method guide | STAT 386</title><link rel="stylesheet" href="assets/site.css"></head><body><header class="site-header"><nav aria-label="Main navigation"><a href="index.html">Home</a><a href="slides.html">Slides</a><a href="notebooks.html">Notebooks</a><a href="explorer.html">Explorer</a><a href="methods.html">Methods</a><a href="teaching_notes.html">Teaching notes</a></nav></header><main><h1>Method guide</h1><h2 id="pca">PCA</h2>
+<p>PCA forms linear combinations of centered features. Its first direction maximizes projected variance, and subsequent directions are perpendicular and capture the remaining variation. Component weights describe directions across features, while scores describe the coordinates of observations along them.</p>
+<p>For centered X, the SVD is X = U Sigma V transpose. The columns of V are component directions, and U Sigma gives scores. With n observations, squared singular values divided by n-1 give covariance eigenvalues. Retaining two components produces an n-by-2 table of plotted coordinates.</p>
+<p>PCA is a fast and interpretable baseline. Scaling changes the directions, large variance need not answer the substantive question, and a linear projection can hide nonlinear structure. In the supplied Titanic preparation, the first two components retain <strong>53.8%</strong> of feature variance.</p>
+<figure>
+<img src="assets/pca_variance.png" alt="Actual explained variance for the Titanic feature matrix." />
+<figcaption aria-hidden="true">Actual explained variance for the Titanic feature matrix.</figcaption>
+</figure>
+<h2 id="t-sne">t-SNE</h2>
+<p>t-SNE converts high-dimensional similarities into probabilities, using adaptive local scales. A heavy-tailed low-dimensional similarity model helps address crowding. It optimizes point positions to match the similarity patterns, with particular sensitivity to local relationships.</p>
+<p>Perplexity sets an effective neighborhood scale rather than an exact neighbor count. Different scales or initializations can change the layout. Inspect group profiles in the original variables before interpreting apparent islands. Between-island distances, areas, and densities are not faithful measurements of the original space.</p>
+<figure>
+<img src="assets/tsne_perplexity.png" alt="Actual t-SNE parameter comparison." />
+<figcaption aria-hidden="true">Actual t-SNE parameter comparison.</figcaption>
+</figure>
+<h2 id="umap">UMAP</h2>
+<p>UMAP constructs locally scaled neighborhood relationships, combines them into a weighted graph, and optimizes a low-dimensional representation. <code>n_neighbors</code> affects neighborhood context. <code>min_dist</code> influences packing in the layout through its distance curve rather than imposing a hard lower bound on all point pairs.</p>
+<p>UMAP provides useful views of neighborhood structure, but gaps and compact groups can partly reflect preparation and parameter choices. It does not fully preserve density and can create apparent separations. Compare a reasonable alternative view and return to original features.</p>
+<figure>
+<img src="assets/umap_neighbors.png" alt="Saved UMAP reference runs at different neighborhood scales." />
+<figcaption aria-hidden="true">Saved UMAP reference runs at different neighborhood scales.</figcaption>
+</figure>
+<h2 id="phate">PHATE</h2>
+<p>PHATE builds a graph, applies diffusion, compares the resulting profiles using a potential-distance construction, and produces a low-dimensional MDS layout. This gives another view of continuous patterns and broader connectivity. The main lecture uses the diffusion intuition without deriving the mathematics.</p>
+<p><code>knn</code> sets neighborhood construction and <code>t</code> sets diffusion smoothing. The example uses <code>t="auto"</code>. A larger diffusion scale can obscure fine distinctions, and a branch in a representation does not by itself establish a temporal trajectory. Titanic has no observed developmental progression.</p>
+<figure>
+<img src="assets/phate_diffusion.png" alt="Actual PHATE runs at several diffusion settings." />
+<figcaption aria-hidden="true">Actual PHATE runs at several diffusion settings.</figcaption>
+</figure>
+<h2 id="a-practical-comparison">A practical comparison</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>Useful questions</th>
+<th>A limitation worth checking</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PCA</td>
+<td>What broad feature combinations vary together?</td>
+<td>What remains outside the displayed components?</td>
+</tr>
+<tr class="even">
+<td>t-SNE</td>
+<td>Which observations have similar local profiles?</td>
+<td>Is a visual grouping stable and meaningful in original variables?</td>
+</tr>
+<tr class="odd">
+<td>UMAP</td>
+<td>How do neighborhood patterns vary with context?</td>
+<td>Do graph scale or layout packing drive the apparent gaps?</td>
+</tr>
+<tr class="even">
+<td>PHATE</td>
+<td>What continuous or connected patterns merit investigation?</td>
+<td>Does smoothing hide distinctions or invite an unsupported trajectory story?</td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img src="assets/four_methods.png" alt="The supplied Titanic representations with survival overlaid." />
+<figcaption aria-hidden="true">The supplied Titanic representations with survival overlaid.</figcaption>
+</figure>
+<p>The same outcome colors do not make these a benchmark of classification performance. Survival was withheld, but association in this dataset is still not a causal claim or an out-of-sample performance estimate.</p>
+<p>Primary references are on the <a href="sources.html">sources page</a>.</p>
+</main><footer>STAT 386 · Exploratory Data Analysis</footer></body></html>

@@ -1,0 +1,42 @@
+---
+title: "Dimensionality Reduction for EDA"
+---
+
+Explore passenger profiles across several variables, then use color and original-variable comparisons to investigate what those profiles mean.
+
+## During class
+
+[Open the Quarto slides](slides.qmd) · [Open the embedding explorer](explorer.html)
+
+| Time | Focus |
+|---|---|
+| 0-3 | Reconnect to the Titanic questions from Day 1 |
+| 3-17 | PCA geometry, SVD, weights, variance, and scaling |
+| 17-24 | t-SNE similarities and interpretation |
+| 24-30 | UMAP neighborhoods and layout choices |
+| 30-34 | PHATE diffusion intuition |
+| 34-46 | Live Titanic exploration and original-variable checks |
+| 46-50 | Comparison and interpretation check |
+
+## Code for Positron
+
+[Download all notebooks, data, and saved runs together](downloads/EDA_Day2_Notebooks_and_Data.zip)
+
+| Notebook | Download | Read online |
+|---|---|---|
+| Titanic live scaffold | [`.ipynb`](downloads/titanic_live_scaffold.ipynb) | [Preview](notebooks/titanic_live_scaffold.html) |
+| Titanic completed reference | [`.ipynb`](downloads/titanic_complete.ipynb) | [Preview](notebooks/titanic_complete.html) |
+| Tornado extra practice | [`.ipynb`](downloads/tornado_practice.ipynb) | [Preview](notebooks/tornado_practice.html) |
+| Tornado completed reference | [`.ipynb`](downloads/tornado_complete.ipynb) | [Preview](notebooks/tornado_complete.html) |
+
+The four methods are PCA, t-SNE, UMAP, and PHATE. Saved coordinates let the examples run immediately after base setup. Recomputing UMAP or PHATE requires the additional packages described on the [notebook page](notebooks.qmd).
+
+## What to investigate
+
+Compare an embedding without color, an input-feature overlay, a missingness overlay, and a withheld outcome overlay. Select a region and return to the original variables. Then ask which interpretation survives a reasonable alternative view.
+
+The [methods guide](methods.qmd) summarizes strengths and limitations. [Run details](run_details.qmd) documents the data, preparation, implementations, and settings.
+
+## Optional tornado practice
+
+Use a fixed 700-record sample from the Day 1 dataset, which covers 4,706 whole tornado tracks from **2015-2018**. Construct profiles from track size and starting location, then overlay EF rating. The exercise is outside the required 50-minute class.

@@ -1,0 +1,49 @@
+---
+title: "Notebooks for live teaching and practice"
+---
+
+## Start in Positron
+
+Download the full notebook-and-data folder, extract it, and open that folder in Positron. Keep `data/`, `support/`, and `notebooks/` together.
+
+```bash
+uv sync
+```
+
+Select the `.venv` Python interpreter for the notebook kernel. The base environment supports the saved examples and fresh PCA/t-SNE computations. The dataset and coordinates load from local files.
+
+For fresh UMAP and PHATE fits:
+
+```bash
+uv sync --extra recompute
+```
+
+Run the completed notebook once before class if you will recompute, because Python UMAP may compile code on its first run. Set `RECOMPUTE = True` in the completed version. The live scaffold leaves the method calls for you to complete and starts with saved runs available as a fallback.
+
+## Titanic
+
+| Version | Notebook | Browser preview |
+|---|---|---|
+| Live scaffold | [titanic_live_scaffold.ipynb](downloads/titanic_live_scaffold.ipynb) | [Read](notebooks/titanic_live_scaffold.html) |
+| Completed reference | [titanic_complete.ipynb](downloads/titanic_complete.ipynb) | [Read](notebooks/titanic_complete.html) |
+
+Both versions use matching sections. The main path is supplied preparation, one method call for each representation, recoloring fixed coordinates, and an original-variable comparison. Optional sections cover SVD, region inspection, and parameter sensitivity.
+
+The scaffold has no saved outputs. It retains the supplied coordinates until a filled-in method cell replaces them, so you can skip a computation without breaking later plotting cells. The completed notebook shows the actual fitting code inside `RECOMPUTE` branches as well as the saved results.
+
+## Optional tornado practice
+
+| Version | Notebook | Browser preview |
+|---|---|---|
+| Practice | [tornado_practice.ipynb](downloads/tornado_practice.ipynb) | [Read](notebooks/tornado_practice.html) |
+| Completed reference | [tornado_complete.ipynb](downloads/tornado_complete.ipynb) | [Read](notebooks/tornado_complete.html) |
+
+The fixed sample has 700 records. Embedding inputs are standardized log1p track length, log1p maximum width, starting latitude, and starting longitude. EF rating, time, and outcomes remain outside the inputs. The sample is for exploration, not population risk estimation.
+
+The final practice questions ask students to compare the embeddings with original measurements and consider how geography changes the definition of similarity.
+
+## Saved-run provenance
+
+The saved PCA and t-SNE runs use scikit-learn. PHATE uses its Python implementation. Saved UMAP uses the official UMAP-js implementation because Python UMAP was unavailable in the authoring environment. The fitting code supplied for Python uses `umap-learn`; those results can differ from the saved layouts.
+
+All saved coordinates are real computations on the documented feature matrices. Row identities and a feature-matrix fingerprint are checked before loading. Changed preparation requires recomputation. See [run details](run_details.qmd).

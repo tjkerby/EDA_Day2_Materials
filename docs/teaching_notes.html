@@ -1,0 +1,93 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Teaching notes: EDA Day 2 | STAT 386</title><link rel="stylesheet" href="assets/site.css"></head><body><header class="site-header"><nav aria-label="Main navigation"><a href="index.html">Home</a><a href="slides.html">Slides</a><a href="notebooks.html">Notebooks</a><a href="explorer.html">Explorer</a><a href="methods.html">Methods</a><a href="teaching_notes.html">Teaching notes</a></nav></header><main><h1>Teaching notes: EDA Day 2</h1><h2 id="before-class">Before class</h2>
+<p>Open the slides and the Titanic live scaffold. Keep the completed notebook in a second tab. Run setup and the supplied preparation cell before class. Saved runs allow all four methods to appear immediately.</p>
+<p>If fitting UMAP or PHATE live, first run <code>uv sync --extra recompute</code> and warm up the completed notebook. Python UMAP’s first compilation can take longer than a normal fit. Keep the browser explorer open as another way to recolor, hover, and select records.</p>
+<h2 id="fifty-minute-route">Fifty-minute route</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Clock</th>
+<th>Focus</th>
+<th>What to protect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0-3</td>
+<td>Day 1 review and multivariable question</td>
+<td>Students name the next question</td>
+</tr>
+<tr class="even">
+<td>3-17</td>
+<td>PCA geometry and SVD</td>
+<td>Directions versus scores, scaling, retained variance</td>
+</tr>
+<tr class="odd">
+<td>17-24</td>
+<td>t-SNE</td>
+<td>Similarities, perplexity, limits of island interpretation</td>
+</tr>
+<tr class="even">
+<td>24-30</td>
+<td>UMAP</td>
+<td>Neighborhood graph, context versus packing</td>
+</tr>
+<tr class="odd">
+<td>30-34</td>
+<td>PHATE</td>
+<td>Diffusion intuition and smoothing, no derivation</td>
+</tr>
+<tr class="even">
+<td>34-46</td>
+<td>Live Titanic exploration</td>
+<td>Recolor fixed coordinates and return to original variables</td>
+</tr>
+<tr class="odd">
+<td>46-50</td>
+<td>Comparison and exit check</td>
+<td>One original-variable check and one sensitivity check</td>
+</tr>
+</tbody>
+</table>
+<p>The tornado exercise and all appendix slides are optional. They add no scheduled class time.</p>
+<h2 id="pca-bridge-for-students-with-linear-algebra">PCA bridge for students with linear algebra</h2>
+<p>Begin geometrically, then distinguish a direction vector from an observation’s coordinate. In reduced SVD of this centered 891-by-12 matrix, U is 891-by-12, Sigma is 12-by-12, and V is 12-by-12. The first two scores are U[:, :2] times the first two singular values, equivalently X_centered times the first two columns of V.</p>
+<p>scikit-learn returns directions as rows of <code>components_</code>, so transpose for feature-by-component weights. The scores returned by <code>fit_transform</code> are the coordinates plotted. Reversing a direction and its scores only reflects the axis.</p>
+<p>The supplied two-dimensional PCA retains 53.8% of prepared-feature variance. Ask why that does not guarantee separation by a withheld outcome. Keep the full covariance/eigenvalue derivation in the appendix unless students need it.</p>
+<p>Do not treat standardization as universally correct. Numerical z-scores and categorical blocks have different contributions to distance in this example. Imputation can create structure, which motivates the missingness overlay.</p>
+<h2 id="explaining-the-nonlinear-methods">Explaining the nonlinear methods</h2>
+<p>For t-SNE, connect original distances to adaptive local similarities, then to a heavy-tailed low-dimensional similarity model. Perplexity is an effective scale. Explain why an island raises a question instead of establishing a class label.</p>
+<p>For UMAP, use the illustrative neighbor graph to motivate the actual locally scaled weighted graph and optimized layout. Separate neighborhood context (<code>n_neighbors</code>) from layout compactness (<code>min_dist</code>). The supplied saved reference runs use UMAP-js and the Python recompute cells use umap-learn, as documented in the run details.</p>
+<p>For PHATE, describe walking through a graph to compare broader connectivity profiles, then mapping their relationships. <code>t</code> is diffusion smoothing, not observed time. This is a short exposure to the tool. A Titanic branch is not a developmental trajectory.</p>
+<h2 id="live-code-choices">Live code choices</h2>
+<p>The live scaffold provides setup, prepared features, saved embeddings, plotting helpers, and optional SVD/inspection support. Fill in the method constructors and fit_transform calls. The completed version displays all four fitting calls within explicit RECOMPUTE branches. In either version, recoloring uses the existing coordinates.</p>
+<p>For the twelve-minute live block, type only the most useful calls. Use the saved runs for methods you do not recompute. Spend the remaining time asking what the colors explain and what should be checked next. Avoid reimplementing the preparation pipeline or graph algorithms during this block.</p>
+<p>Suggested sequence:</p>
+<ol type="1">
+<li>Inspect PCA without color, then add a known input such as sex or class.</li>
+<li>Compare t-SNE, UMAP, and PHATE briefly without ranking their apparent label separation.</li>
+<li>Choose one view. Recolor by survival, then age missingness, keeping coordinates fixed.</li>
+<li>Inspect a region and compare its original-variable profile with the remaining passengers.</li>
+<li>Return to the Day 1 class-by-sex survival table with explicit group sizes. Ask what it explains about the apparent separation.</li>
+</ol>
+<p>The notebook’s rightmost-20% region is a reproducible inspection convenience, not a validated cluster. The browser explorer lets you lasso a different region and view its records.</p>
+<h2 id="interpretation-prompts">Interpretation prompts</h2>
+<ul>
+<li>Which features defined the coordinates?</li>
+<li>Is this color an input or withheld information?</li>
+<li>What could imputation explain?</li>
+<li>What would you check in the original variables?</li>
+<li>Which interpretation persists after a reasonable setting change?</li>
+</ul>
+<p>If a student calls an embedding a classifier, ask where fitting, a prediction rule, and out-of-sample evaluation occurred. None are supplied by a color overlay alone.</p>
+<h2 id="optional-tornado-practice">Optional tornado practice</h2>
+<p>The fixed sample has 700 records with standardized transformed size and starting location as inputs. EF, time and outcomes are withheld. Compare the four methods, overlay EF, then inspect original lengths and widths. Unknown EF values remain missing and do not stop fitting on the complete chosen features.</p>
+<p>Ask how adding geography changes the question. The size-only alternative has just two features, so its ordinary scatterplot is already a complete two-variable view. This is a useful reminder to choose a tool according to the question and representation.</p>
+<h2 id="exit-check">Exit check</h2>
+<p>“This map shows three islands, so there are three kinds of passengers.”</p>
+<p>Ask for an original-variable comparison and a sensitivity check. Useful answers include profiles and denominators, inspection of imputed values, alternative neighborhood scales, a different initialization, a different method, and a direct plot. Stability adds evidence but does not prove a population taxonomy.</p>
+</main><footer>STAT 386 · Exploratory Data Analysis</footer></body></html>

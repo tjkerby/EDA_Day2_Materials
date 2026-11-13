@@ -1,0 +1,86 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Dimensionality Reduction for EDA | STAT 386</title><link rel="stylesheet" href="assets/site.css"></head><body><header class="site-header"><nav aria-label="Main navigation"><a href="index.html">Home</a><a href="slides.html">Slides</a><a href="notebooks.html">Notebooks</a><a href="explorer.html">Explorer</a><a href="methods.html">Methods</a><a href="teaching_notes.html">Teaching notes</a></nav></header><main><h1>Dimensionality Reduction for EDA</h1><p>Explore passenger profiles across several variables, then use color and original-variable comparisons to investigate what those profiles mean.</p>
+<h2 id="during-class">During class</h2>
+<p><a href="slides.html">Open the Quarto slides</a> · <a href="explorer.html">Open the embedding explorer</a></p>
+<table>
+<thead>
+<tr class="header">
+<th>Time</th>
+<th>Focus</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0-3</td>
+<td>Reconnect to the Titanic questions from Day 1</td>
+</tr>
+<tr class="even">
+<td>3-17</td>
+<td>PCA geometry, SVD, weights, variance, and scaling</td>
+</tr>
+<tr class="odd">
+<td>17-24</td>
+<td>t-SNE similarities and interpretation</td>
+</tr>
+<tr class="even">
+<td>24-30</td>
+<td>UMAP neighborhoods and layout choices</td>
+</tr>
+<tr class="odd">
+<td>30-34</td>
+<td>PHATE diffusion intuition</td>
+</tr>
+<tr class="even">
+<td>34-46</td>
+<td>Live Titanic exploration and original-variable checks</td>
+</tr>
+<tr class="odd">
+<td>46-50</td>
+<td>Comparison and interpretation check</td>
+</tr>
+</tbody>
+</table>
+<h2 id="code-for-positron">Code for Positron</h2>
+<p><a href="downloads/EDA_Day2_Notebooks_and_Data.zip">Download all notebooks, data, and saved runs together</a></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Notebook</th>
+<th>Download</th>
+<th>Read online</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Titanic live scaffold</td>
+<td><a href="downloads/titanic_live_scaffold.ipynb"><code>.ipynb</code></a></td>
+<td><a href="notebooks/titanic_live_scaffold.html">Preview</a></td>
+</tr>
+<tr class="even">
+<td>Titanic completed reference</td>
+<td><a href="downloads/titanic_complete.ipynb"><code>.ipynb</code></a></td>
+<td><a href="notebooks/titanic_complete.html">Preview</a></td>
+</tr>
+<tr class="odd">
+<td>Tornado extra practice</td>
+<td><a href="downloads/tornado_practice.ipynb"><code>.ipynb</code></a></td>
+<td><a href="notebooks/tornado_practice.html">Preview</a></td>
+</tr>
+<tr class="even">
+<td>Tornado completed reference</td>
+<td><a href="downloads/tornado_complete.ipynb"><code>.ipynb</code></a></td>
+<td><a href="notebooks/tornado_complete.html">Preview</a></td>
+</tr>
+</tbody>
+</table>
+<p>The four methods are PCA, t-SNE, UMAP, and PHATE. Saved coordinates let the examples run immediately after base setup. Recomputing UMAP or PHATE requires the additional packages described on the <a href="notebooks.html">notebook page</a>.</p>
+<h2 id="what-to-investigate">What to investigate</h2>
+<p>Compare an embedding without color, an input-feature overlay, a missingness overlay, and a withheld outcome overlay. Select a region and return to the original variables. Then ask which interpretation survives a reasonable alternative view.</p>
+<p>The <a href="methods.html">methods guide</a> summarizes strengths and limitations. <a href="run_details.html">Run details</a> documents the data, preparation, implementations, and settings.</p>
+<h2 id="optional-tornado-practice">Optional tornado practice</h2>
+<p>Use a fixed 700-record sample from the Day 1 dataset, which covers 4,706 whole tornado tracks from <strong>2015-2018</strong>. Construct profiles from track size and starting location, then overlay EF rating. The exercise is outside the required 50-minute class.</p>
+</main><footer>STAT 386 · Exploratory Data Analysis</footer></body></html>

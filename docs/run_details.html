@@ -1,0 +1,56 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Data preparation and saved-run details | STAT 386</title><link rel="stylesheet" href="assets/site.css"></head><body><header class="site-header"><nav aria-label="Main navigation"><a href="index.html">Home</a><a href="slides.html">Slides</a><a href="notebooks.html">Notebooks</a><a href="explorer.html">Explorer</a><a href="methods.html">Methods</a><a href="teaching_notes.html">Teaching notes</a></nav></header><main><h1>Data preparation and saved-run details</h1><h2 id="titanic">Titanic</h2>
+<p>The 891 passenger records are the same seaborn example subset used in Day 1. This is not a complete passenger manifest. Embedding inputs are age, fare, siblings/spouses, parents/children, passenger class, recorded sex, and embarkation.</p>
+<ul>
+<li>The four numerical fields use median imputation followed by standardization.</li>
+<li>The three categorical fields use most-frequent imputation and full one-hot encoding.</li>
+<li>The result has 12 feature columns, including redundant one-hot directions.</li>
+<li>Survival and missingness indicators are excluded from the embedding inputs and retained as metadata.</li>
+<li>All 891 people remain in every representation. Repeated feature profiles are not duplicate people and are not removed. PHATE uses <code>knn=30</code>, larger than the repeated-profile groups, without adding jitter.</li>
+</ul>
+<p>The geometry therefore reflects a specific weighting of numerical and categorical information. Fitting the preparation on all records is appropriate for this descriptive EDA exercise. It is not an evaluated predictive workflow.</p>
+<h2 id="tornado-practice">Tornado practice</h2>
+<p>The underlying dataset has 4,706 whole tracks, 2015-2018. The practice notebook takes a fixed sample of 700 with <code>random_state=386</code> and stable sorting by tornado ID.</p>
+<p>Inputs are standardized log1p length in miles, log1p width in yards, and start latitude/longitude. Geography and size both influence the representation. Euclidean distance on standardized latitude/longitude is an exploratory construction, not a precise geodesic-distance model.</p>
+<p>EF rating, month, start-state labels, injuries, and fatalities are withheld. Unknown EF ratings remain missing. All time fields use CST, and <code>start_state</code> identifies the beginning of a whole track, not every state affected.</p>
+<p>Raw snapshots, data dictionaries, and the Day 1 preparation script are included. See <code>data/SOURCES.md</code> and <code>data/data_dictionary.md</code> for units and provenance.</p>
+<h2 id="main-settings">Main settings</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>Settings</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PCA</td>
+<td>Two components, full SVD</td>
+</tr>
+<tr class="even">
+<td>t-SNE</td>
+<td>Perplexity 30, PCA initialization, automatic learning rate, 1,000 iterations, seed 42</td>
+</tr>
+<tr class="odd">
+<td>UMAP reference</td>
+<td>15 neighbors, min_dist 0.1, 400 epochs, seeded JavaScript random generator</td>
+</tr>
+<tr class="even">
+<td>PHATE</td>
+<td>knn 30, automatic diffusion time, metric MDS with SMACOF, seed 42</td>
+</tr>
+</tbody>
+</table>
+<h2 id="implementation-and-verification">Implementation and verification</h2>
+<p>Saved PCA and t-SNE were computed using scikit-learn 1.8.0. Saved PHATE was computed with the upstream PHATE 2.0.0 Python source and graphtools 2.1.0 source. PHATE source commit: <code>65a1f73f0c53a65bf1f8db3d4ad32dbef73595c3</code>.</p>
+<p>Saved UMAP was computed with the official <a href="https://github.com/PAIR-code/umap-js">UMAP-js implementation</a>. Python UMAP and its compiled dependencies were unavailable in the authoring environment. The completed notebook includes ordinary <code>umap-learn</code> fitting code, but that recomputation branch was not executed here. Different implementations, optimizers, initializations, and versions can produce different layouts.</p>
+<p>The completed notebooks were executed in saved-run mode, the scaffold was checked without retaining outputs, and all saved coordinates were checked for shape, finite values, row identity, and prepared-feature alignment. PCA/t-SNE and PHATE fitting were also executed during coordinate generation. No simulated coordinates stand in for real method outputs.</p>
+<p>Each main run has a JSON manifest in <code>data/embeddings/</code> with settings and a prepared-matrix fingerprint. The loader checks rounded features and row IDs before loading the coordinates.</p>
+<p>The t-SNE random-initialization variant changes both initialization strategy and seed relative to the main PCA-initialized run. It is an alternative configuration, not a seed-only experiment. The UMAP seed variant holds its main settings fixed. The other displayed comparisons change the named parameter while keeping the preparation fixed.</p>
+<h2 id="recompute-deliberately">Recompute deliberately</h2>
+<p>Install the Python extras with <code>uv sync --extra recompute</code>, then set <code>RECOMPUTE = True</code> in a completed notebook. If changing preprocessing or a sample, fit new embeddings rather than loading the old cache. Preserve the record IDs with your new coordinates.</p>
+<p>The supplied Quarto sources are editable and the prebuilt <code>docs/</code> folder is ready to serve. Quarto itself was unavailable here, so a direct <code>quarto render</code> was not executed. An optional manual GitHub workflow is included to render the project and check its links on GitHub’s runner before you publish changes.</p>
+</main><footer>STAT 386 · Exploratory Data Analysis</footer></body></html>

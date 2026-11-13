@@ -1,0 +1,520 @@
+[
+  {
+    "objectID": "notebooks/tornado_practice.html",
+    "href": "notebooks/tornado_practice.html",
+    "title": "Tornado dimensionality reduction: Extra practice",
+    "section": "",
+    "text": "Optional practice after the main Titanic lesson. The original dataset has 4,706 whole tracks from 2015-2018. This exercise uses a fixed 700-record sample for speed.\nQuestion: What profiles appear across track size and starting location, and how do those profiles relate to EF rating?\nThe inputs are standardized log1p length, log1p width, starting latitude, and starting longitude. EF rating, month, start-state labels, injuries, and fatalities are withheld. Longitude/latitude here are exploratory features, not a precise physical-distance model.\nAll four saved methods are supplied. The same UMAP-js versus Python umap-learn provenance note applies as in Titanic. See run details."
+  },
+  {
+    "objectID": "notebooks/tornado_practice.html#setup-and-prepared-featureskeep-missing-ef-ratings-as-missing.-they-do-not-prevent-fitting-these-four-complete-input-features.",
+    "href": "notebooks/tornado_practice.html#setup-and-prepared-featureskeep-missing-ef-ratings-as-missing.-they-do-not-prevent-fitting-these-four-complete-input-features.",
+    "title": "Tornado dimensionality reduction: Extra practice",
+    "section": "Setup and prepared featuresKeep missing EF ratings as missing. They do not prevent fitting these four complete input features.",
+    "text": "Setup and prepared featuresKeep missing EF ratings as missing. They do not prevent fitting these four complete input features.\n\nfrom pathlib import Pathimport sysimport numpy as npimport pandas as pdimport matplotlib.pyplot as pltfrom sklearn.decomposition import PCAfrom sklearn.manifold import TSNEROOT = Path.cwd()if not (ROOT / \"support/eda_helpers.py\").exists():    ROOT = ROOT.parentsys.path.insert(0, str(ROOT / \"support\"))from eda_helpers import prepare_titanic, prepare_tornadoes, load_saved, load_variant, plot_embedding# False uses supplied runs and requires only the base environment.# True recomputes nonlinear methods. First run: uv sync --extra recomputeRECOMPUTE = Falsedf, X, feature_names = prepare_tornadoes(ROOT, include_location=True)embeddings = {} if RECOMPUTE else load_saved(ROOT, \"tornadoes\", X, df[\"tornado_id\"])print(\"Fixed practice sample:\", len(df), \"records\")print(\"Embedding features:\", feature_names)\n\nFixed practice sample: 700 records\nEmbedding features: ['log1p_length', 'log1p_width', 'start_latitude', 'start_longitude']"
+  },
+  {
+    "objectID": "notebooks/tornado_practice.html#a-familiar-starting-viewcompare-size-variables-directly-before-interpreting-their-multivariable-embedding.-the-transformations-reduce-domination-by-very-large-recorded-tracks.",
+    "href": "notebooks/tornado_practice.html#a-familiar-starting-viewcompare-size-variables-directly-before-interpreting-their-multivariable-embedding.-the-transformations-reduce-domination-by-very-large-recorded-tracks.",
+    "title": "Tornado dimensionality reduction: Extra practice",
+    "section": "A familiar starting viewCompare size variables directly before interpreting their multivariable embedding. The transformations reduce domination by very large recorded tracks.",
+    "text": "A familiar starting viewCompare size variables directly before interpreting their multivariable embedding. The transformations reduce domination by very large recorded tracks.\n\nplt.scatter(np.log1p(df[\"path_length_miles\"]), np.log1p(df[\"max_width_yards\"]), s=15, alpha=0.6)plt.xlabel(\"log(1 + path length in miles)\")plt.ylabel(\"log(1 + maximum width in yards)\")plt.tight_layout()plt.show()"
+  },
+  {
+    "objectID": "notebooks/tornado_practice.html#pca-a-linear-baselineapply-the-method-using-the-titanic-notebook-as-a-reference-or-explore-the-supplied-coordinates.",
+    "href": "notebooks/tornado_practice.html#pca-a-linear-baselineapply-the-method-using-the-titanic-notebook-as-a-reference-or-explore-the-supplied-coordinates.",
+    "title": "Tornado dimensionality reduction: Extra practice",
+    "section": "PCA: a linear baselineApply the method using the Titanic notebook as a reference, or explore the supplied coordinates.",
+    "text": "PCA: a linear baselineApply the method using the Titanic notebook as a reference, or explore the supplied coordinates.\n\n# TODO: Fit this method and replace its entry in embeddings.# The supplied entry remains available for exploration."
+  },
+  {
+    "objectID": "notebooks/tornado_practice.html#t-sne-neighborhood-similaritiesapply-the-method-using-the-titanic-notebook-as-a-reference-or-explore-the-supplied-coordinates.",
+    "href": "notebooks/tornado_practice.html#t-sne-neighborhood-similaritiesapply-the-method-using-the-titanic-notebook-as-a-reference-or-explore-the-supplied-coordinates.",
+    "title": "Tornado dimensionality reduction: Extra practice",
+    "section": "t-SNE: neighborhood similaritiesApply the method using the Titanic notebook as a reference, or explore the supplied coordinates.",
+    "text": "t-SNE: neighborhood similaritiesApply the method using the Titanic notebook as a reference, or explore the supplied coordinates.\n\n# TODO: Fit this method and replace its entry in embeddings.# The supplied entry remains available for exploration."
+  },
+  {
+    "objectID": "notebooks/tornado_practice.html#umap-a-neighborhood-graphapply-the-method-using-the-titanic-notebook-as-a-reference-or-explore-the-supplied-coordinates.",
+    "href": "notebooks/tornado_practice.html#umap-a-neighborhood-graphapply-the-method-using-the-titanic-notebook-as-a-reference-or-explore-the-supplied-coordinates.",
+    "title": "Tornado dimensionality reduction: Extra practice",
+    "section": "UMAP: a neighborhood graphApply the method using the Titanic notebook as a reference, or explore the supplied coordinates.",
+    "text": "UMAP: a neighborhood graphApply the method using the Titanic notebook as a reference, or explore the supplied coordinates.\n\n# TODO: Fit this method and replace its entry in embeddings.# The supplied entry remains available for exploration."
+  },
+  {
+    "objectID": "notebooks/tornado_practice.html#phate-diffusion-and-broader-structureapply-the-method-using-the-titanic-notebook-as-a-reference-or-explore-the-supplied-coordinates.",
+    "href": "notebooks/tornado_practice.html#phate-diffusion-and-broader-structureapply-the-method-using-the-titanic-notebook-as-a-reference-or-explore-the-supplied-coordinates.",
+    "title": "Tornado dimensionality reduction: Extra practice",
+    "section": "PHATE: diffusion and broader structureApply the method using the Titanic notebook as a reference, or explore the supplied coordinates.",
+    "text": "PHATE: diffusion and broader structureApply the method using the Titanic notebook as a reference, or explore the supplied coordinates.\n\n# TODO: Fit this method and replace its entry in embeddings.# The supplied entry remains available for exploration."
+  },
+  {
+    "objectID": "notebooks/tornado_practice.html#investigate-a-question-using-colortry-ef_rating-month-path_length_miles-max_width_yards-start_state-or-start_latitude.-which-overlays-describe-features-already-used-to-construct-the-geometry-which-supply-withheld-information",
+    "href": "notebooks/tornado_practice.html#investigate-a-question-using-colortry-ef_rating-month-path_length_miles-max_width_yards-start_state-or-start_latitude.-which-overlays-describe-features-already-used-to-construct-the-geometry-which-supply-withheld-information",
+    "title": "Tornado dimensionality reduction: Extra practice",
+    "section": "Investigate a question using colorTry ef_rating, month, path_length_miles, max_width_yards, start_state, or start_latitude. Which overlays describe features already used to construct the geometry? Which supply withheld information?",
+    "text": "Investigate a question using colorTry ef_rating, month, path_length_miles, max_width_yards, start_state, or start_latitude. Which overlays describe features already used to construct the geometry? Which supply withheld information?\n\nMETHOD = \"PHATE\"COLOR_BY = \"ef_rating\"plot_embedding(embeddings[METHOD], df, COLOR_BY, f\"{METHOD}: {COLOR_BY}\")plt.tight_layout()plt.show()"
+  },
+  {
+    "objectID": "notebooks/tornado_practice.html#return-to-original-variablesinspect-the-number-of-observed-ratings-before-comparing-sizes-across-ef-categories.-this-is-a-descriptive-comparison-within-the-practice-sample-not-a-population-risk-estimate.",
+    "href": "notebooks/tornado_practice.html#return-to-original-variablesinspect-the-number-of-observed-ratings-before-comparing-sizes-across-ef-categories.-this-is-a-descriptive-comparison-within-the-practice-sample-not-a-population-risk-estimate.",
+    "title": "Tornado dimensionality reduction: Extra practice",
+    "section": "Return to original variablesInspect the number of observed ratings before comparing sizes across EF categories. This is a descriptive comparison within the practice sample, not a population risk estimate.",
+    "text": "Return to original variablesInspect the number of observed ratings before comparing sizes across EF categories. This is a descriptive comparison within the practice sample, not a population risk estimate.\n\n# TODO: Choose a relevant original-variable comparison.# Count the records used and explain any missing-value exclusions."
+  },
+  {
+    "objectID": "notebooks/tornado_practice.html#further-practice--compare-a-size-only-pca-with-the-size-and-location-pca.-prepare_tornadoesroot-include_locationfalse-provides-the-two-size-inputs.-why-is-a-direct-two-variable-scatter-already-informative-in-that-case--explain-how-including-geography-influences-the-meaning-of-a-visible-grouping.--identify-a-question-this-dataset-cannot-answer-without-additional-information.saved-coordinates-are-tied-to-the-supplied-feature-matrix.-changed-preparation-requires-recomputation-not-reuse-of-the-old-cache.",
+    "href": "notebooks/tornado_practice.html#further-practice--compare-a-size-only-pca-with-the-size-and-location-pca.-prepare_tornadoesroot-include_locationfalse-provides-the-two-size-inputs.-why-is-a-direct-two-variable-scatter-already-informative-in-that-case--explain-how-including-geography-influences-the-meaning-of-a-visible-grouping.--identify-a-question-this-dataset-cannot-answer-without-additional-information.saved-coordinates-are-tied-to-the-supplied-feature-matrix.-changed-preparation-requires-recomputation-not-reuse-of-the-old-cache.",
+    "title": "Tornado dimensionality reduction: Extra practice",
+    "section": "Further practice- Compare a size-only PCA with the size-and-location PCA. prepare_tornadoes(ROOT, include_location=False) provides the two size inputs. Why is a direct two-variable scatter already informative in that case?- Explain how including geography influences the meaning of a visible grouping.- Identify a question this dataset cannot answer without additional information.Saved coordinates are tied to the supplied feature matrix. Changed preparation requires recomputation, not reuse of the old cache.",
+    "text": "Further practice- Compare a size-only PCA with the size-and-location PCA. prepare_tornadoes(ROOT, include_location=False) provides the two size inputs. Why is a direct two-variable scatter already informative in that case?- Explain how including geography influences the meaning of a visible grouping.- Identify a question this dataset cannot answer without additional information.Saved coordinates are tied to the supplied feature matrix. Changed preparation requires recomputation, not reuse of the old cache."
+  },
+  {
+    "objectID": "notebooks/titanic_live_scaffold.html",
+    "href": "notebooks/titanic_live_scaffold.html",
+    "title": "Titanic dimensionality reduction: Live coding scaffold",
+    "section": "",
+    "text": "Question: What profiles appear across passenger characteristics, and how do they relate to survival?\nPreparation and plotting helpers are supplied. Fill in the method calls live. Saved runs are loaded as a fallback, and this scaffold has no saved outputs.\nThe main live path is preparation, one fit_transform call per method, recoloring, and a return to original variables. The SVD and parameter sections are optional follow-up.\nSaved-run provenance: PCA and t-SNE use scikit-learn, PHATE uses its Python implementation, and UMAP uses the official UMAP-js implementation. The Python UMAP recomputation branch uses umap-learn and was not executable in the authoring environment. The two implementations can produce different layouts. See run details."
+  },
+  {
+    "objectID": "notebooks/titanic_live_scaffold.html#setuprun-before-class.-the-four-saved-runs-are-already-computed-for-the-bundled-data.-install-the-recompute-extra-before-using-umap-or-phate-fitting-code.",
+    "href": "notebooks/titanic_live_scaffold.html#setuprun-before-class.-the-four-saved-runs-are-already-computed-for-the-bundled-data.-install-the-recompute-extra-before-using-umap-or-phate-fitting-code.",
+    "title": "Titanic dimensionality reduction: Live coding scaffold",
+    "section": "SetupRun before class. The four saved runs are already computed for the bundled data. Install the recompute extra before using UMAP or PHATE fitting code.",
+    "text": "SetupRun before class. The four saved runs are already computed for the bundled data. Install the recompute extra before using UMAP or PHATE fitting code.\n\nfrom pathlib import Pathimport sysimport numpy as npimport pandas as pdimport matplotlib.pyplot as pltfrom sklearn.decomposition import PCAfrom sklearn.manifold import TSNEROOT = Path.cwd()if not (ROOT / \"support/eda_helpers.py\").exists():    ROOT = ROOT.parentsys.path.insert(0, str(ROOT / \"support\"))from eda_helpers import prepare_titanic, prepare_tornadoes, load_saved, load_variant, plot_embedding# False uses supplied runs and requires only the base environment.# True recomputes nonlinear methods. First run: uv sync --extra recomputeRECOMPUTE = False"
+  },
+  {
+    "objectID": "notebooks/titanic_live_scaffold.html#prepared-features-and-plotting-metadatathe-supplied-preparation-function-imputes-numerical-fields-by-the-median-standardizes-them-and-imputesone-hot-encodes-categorical-fields.-it-retains-all-891-passengers.-open-supporteda_helpers.py-to-inspect-the-full-pipeline.-embedding-inputs-preparation-age-fare-sibsp-parch-median-imputation-then-z-scores-pclass-sex-embarked-most-frequent-imputation-then-one-hot-encoding-survived-excluded-from-inputs-retained-for-color-missingness-indicators-excluded-from-inputs-retained-for-color-the-numerical-block-and-each-categorical-block-contribute-differently-to-euclidean-distances.-this-is-one-explicit-definition-of-passenger-similarity-not-an-automatically-optimal-choice.",
+    "href": "notebooks/titanic_live_scaffold.html#prepared-features-and-plotting-metadatathe-supplied-preparation-function-imputes-numerical-fields-by-the-median-standardizes-them-and-imputesone-hot-encodes-categorical-fields.-it-retains-all-891-passengers.-open-supporteda_helpers.py-to-inspect-the-full-pipeline.-embedding-inputs-preparation-age-fare-sibsp-parch-median-imputation-then-z-scores-pclass-sex-embarked-most-frequent-imputation-then-one-hot-encoding-survived-excluded-from-inputs-retained-for-color-missingness-indicators-excluded-from-inputs-retained-for-color-the-numerical-block-and-each-categorical-block-contribute-differently-to-euclidean-distances.-this-is-one-explicit-definition-of-passenger-similarity-not-an-automatically-optimal-choice.",
+    "title": "Titanic dimensionality reduction: Live coding scaffold",
+    "section": "Prepared features and plotting metadataThe supplied preparation function imputes numerical fields by the median, standardizes them, and imputes/one-hot encodes categorical fields. It retains all 891 passengers. Open support/eda_helpers.py to inspect the full pipeline.| Embedding inputs | Preparation ||—|—|| age, fare, sibsp, parch | Median imputation, then z-scores || pclass, sex, embarked | Most-frequent imputation, then one-hot encoding || survived | Excluded from inputs, retained for color || Missingness indicators | Excluded from inputs, retained for color |The numerical block and each categorical block contribute differently to Euclidean distances. This is one explicit definition of passenger similarity, not an automatically optimal choice.",
+    "text": "Prepared features and plotting metadataThe supplied preparation function imputes numerical fields by the median, standardizes them, and imputes/one-hot encodes categorical fields. It retains all 891 passengers. Open support/eda_helpers.py to inspect the full pipeline.| Embedding inputs | Preparation ||—|—|| age, fare, sibsp, parch | Median imputation, then z-scores || pclass, sex, embarked | Most-frequent imputation, then one-hot encoding || survived | Excluded from inputs, retained for color || Missingness indicators | Excluded from inputs, retained for color |The numerical block and each categorical block contribute differently to Euclidean distances. This is one explicit definition of passenger similarity, not an automatically optimal choice.\n\ndf, X, feature_names, preprocessor = prepare_titanic(ROOT)embeddings = {} if RECOMPUTE else load_saved(ROOT, \"titanic\", X, df[\"row_id\"])print(\"Prepared matrix:\", X.shape)print(\"Feature columns:\", feature_names)assert \"survived\" not in feature_namesdf[[\"row_id\", \"age\", \"fare\", \"pclass\", \"sex\", \"survived\"]].head()"
+  },
+  {
+    "objectID": "notebooks/titanic_live_scaffold.html#pca-a-linear-baselinebefore-running-what-kind-of-information-does-this-method-prioritize",
+    "href": "notebooks/titanic_live_scaffold.html#pca-a-linear-baselinebefore-running-what-kind-of-information-does-this-method-prioritize",
+    "title": "Titanic dimensionality reduction: Live coding scaffold",
+    "section": "PCA: a linear baselineBefore running: what kind of information does this method prioritize?",
+    "text": "PCA: a linear baselineBefore running: what kind of information does this method prioritize?\n\n# TODO: Create PCA with two components, then fit_transform(X).# Replace embeddings[\"PCA\"] with the resulting coordinates.# Optional: inspect the explained_variance_ratio_.# The saved run remains available if you skip a computation.plot_embedding(embeddings[\"PCA\"], df, title=\"PCA: passenger profiles\")plt.tight_layout()plt.show()\n\nDiscuss: What does this view suggest? What would you color or inspect next?"
+  },
+  {
+    "objectID": "notebooks/titanic_live_scaffold.html#t-sne-neighborhood-similaritiesbefore-running-what-kind-of-information-does-this-method-prioritize",
+    "href": "notebooks/titanic_live_scaffold.html#t-sne-neighborhood-similaritiesbefore-running-what-kind-of-information-does-this-method-prioritize",
+    "title": "Titanic dimensionality reduction: Live coding scaffold",
+    "section": "t-SNE: neighborhood similaritiesBefore running: what kind of information does this method prioritize?",
+    "text": "t-SNE: neighborhood similaritiesBefore running: what kind of information does this method prioritize?\n\n# TODO: If recomputing, create TSNE and fit_transform(X).# Suggested settings: perplexity=30, init=\"pca\", learning_rate=\"auto\",# max_iter=1000, random_state=42.# Replace embeddings[\"t-SNE\"] with the coordinates.plot_embedding(embeddings[\"t-SNE\"], df, \"sex\", \"t-SNE colored by recorded sex\")plt.tight_layout()plt.show()\n\nDiscuss: What does this view suggest? What would you color or inspect next?"
+  },
+  {
+    "objectID": "notebooks/titanic_live_scaffold.html#umap-a-neighborhood-graphbefore-running-what-kind-of-information-does-this-method-prioritize",
+    "href": "notebooks/titanic_live_scaffold.html#umap-a-neighborhood-graphbefore-running-what-kind-of-information-does-this-method-prioritize",
+    "title": "Titanic dimensionality reduction: Live coding scaffold",
+    "section": "UMAP: a neighborhood graphBefore running: what kind of information does this method prioritize?",
+    "text": "UMAP: a neighborhood graphBefore running: what kind of information does this method prioritize?\n\n# TODO: If recomputing, import umap and create umap.UMAP(...).# Suggested settings: n_neighbors=15, min_dist=0.1, random_state=42.# Replace embeddings[\"UMAP\"] with fit_transform(X).plot_embedding(embeddings[\"UMAP\"], df, \"pclass\", \"UMAP colored by passenger class\")plt.tight_layout()plt.show()\n\nDiscuss: What does this view suggest? What would you color or inspect next?"
+  },
+  {
+    "objectID": "notebooks/titanic_live_scaffold.html#phate-diffusion-and-broader-structurebefore-running-what-kind-of-information-does-this-method-prioritize",
+    "href": "notebooks/titanic_live_scaffold.html#phate-diffusion-and-broader-structurebefore-running-what-kind-of-information-does-this-method-prioritize",
+    "title": "Titanic dimensionality reduction: Live coding scaffold",
+    "section": "PHATE: diffusion and broader structureBefore running: what kind of information does this method prioritize?",
+    "text": "PHATE: diffusion and broader structureBefore running: what kind of information does this method prioritize?\n\n# TODO: If recomputing, import phate and create phate.PHATE(...).# Suggested settings: knn=30, t=\"auto\", mds_solver=\"smacof\", random_state=42.# Replace embeddings[\"PHATE\"] with fit_transform(X).plot_embedding(embeddings[\"PHATE\"], df, \"survived\", \"PHATE colored by survival\")plt.tight_layout()plt.show()\n\nDiscuss: What does this view suggest? What would you color or inspect next?"
+  },
+  {
+    "objectID": "notebooks/titanic_live_scaffold.html#recolor-the-same-coordinateschoose-a-method-and-a-variable-then-rerun-this-cell.-recoloring-does-not-refit-the-embedding.-compare-an-input-feature-a-missingness-indicator-and-survival-which-was-withheld.options-sex-pclass-age-fare-age_is_missing-embarked_is_missing-survived.",
+    "href": "notebooks/titanic_live_scaffold.html#recolor-the-same-coordinateschoose-a-method-and-a-variable-then-rerun-this-cell.-recoloring-does-not-refit-the-embedding.-compare-an-input-feature-a-missingness-indicator-and-survival-which-was-withheld.options-sex-pclass-age-fare-age_is_missing-embarked_is_missing-survived.",
+    "title": "Titanic dimensionality reduction: Live coding scaffold",
+    "section": "Recolor the same coordinatesChoose a method and a variable, then rerun this cell. Recoloring does not refit the embedding. Compare an input feature, a missingness indicator, and survival, which was withheld.Options: sex, pclass, age, fare, age_is_missing, embarked_is_missing, survived.",
+    "text": "Recolor the same coordinatesChoose a method and a variable, then rerun this cell. Recoloring does not refit the embedding. Compare an input feature, a missingness indicator, and survival, which was withheld.Options: sex, pclass, age, fare, age_is_missing, embarked_is_missing, survived.\n\nMETHOD = \"UMAP\"COLOR_BY = \"survived\"plot_embedding(embeddings[METHOD], df, COLOR_BY, f\"{METHOD}: {COLOR_BY}\")plt.tight_layout()plt.show()"
+  },
+  {
+    "objectID": "notebooks/titanic_live_scaffold.html#a-pattern-becomes-another-questiondoes-apparent-survival-separation-simply-reflect-passenger-class-and-sex-return-to-the-original-variables-and-compare-proportions-with-explicit-denominators.",
+    "href": "notebooks/titanic_live_scaffold.html#a-pattern-becomes-another-questiondoes-apparent-survival-separation-simply-reflect-passenger-class-and-sex-return-to-the-original-variables-and-compare-proportions-with-explicit-denominators.",
+    "title": "Titanic dimensionality reduction: Live coding scaffold",
+    "section": "A pattern becomes another questionDoes apparent survival separation simply reflect passenger class and sex? Return to the original variables and compare proportions with explicit denominators.",
+    "text": "A pattern becomes another questionDoes apparent survival separation simply reflect passenger class and sex? Return to the original variables and compare proportions with explicit denominators.\n\n# TODO: Group passengers by class and sex.# Show group sizes, survivor counts, and survival proportions.# What does this original-variable view add to the embedding?"
+  },
+  {
+    "objectID": "notebooks/titanic_live_scaffold.html#optional-inspect-a-region-and-compare-it-with-the-remaining-passengersthis-example-takes-the-rightmost-20-of-one-layout-as-a-convenient-inspection-region.-it-does-not-define-a-validated-cluster.-axis-direction-is-arbitrary-and-the-region-changes-if-the-embedding-rotates-or-changes-settings.",
+    "href": "notebooks/titanic_live_scaffold.html#optional-inspect-a-region-and-compare-it-with-the-remaining-passengersthis-example-takes-the-rightmost-20-of-one-layout-as-a-convenient-inspection-region.-it-does-not-define-a-validated-cluster.-axis-direction-is-arbitrary-and-the-region-changes-if-the-embedding-rotates-or-changes-settings.",
+    "title": "Titanic dimensionality reduction: Live coding scaffold",
+    "section": "Optional: inspect a region and compare it with the remaining passengersThis example takes the rightmost 20% of one layout as a convenient inspection region. It does not define a validated cluster. Axis direction is arbitrary and the region changes if the embedding rotates or changes settings.",
+    "text": "Optional: inspect a region and compare it with the remaining passengersThis example takes the rightmost 20% of one layout as a convenient inspection region. It does not define a validated cluster. Axis direction is arbitrary and the region changes if the embedding rotates or changes settings.\n\ncoords = embeddings[\"UMAP\"]in_region = coords[:, 0] &gt; np.quantile(coords[:, 0], 0.8)regions = df.assign(region=np.where(in_region, \"Selected region\", \"Remaining passengers\"))display(regions.groupby(\"region\").agg(    n=(\"row_id\", \"size\"), survival=(\"survived\", \"mean\"),    average_fare=(\"fare\", \"mean\"), missing_age=(\"age_is_missing\", \"mean\")).round(3))display(pd.crosstab(regions[\"region\"], regions[\"pclass\"], normalize=\"index\").round(3))"
+  },
+  {
+    "objectID": "notebooks/titanic_live_scaffold.html#optional-connect-svd-to-pcafor-centered-x-x-u-diags-vt.-the-first-two-right-singular-vectors-define-directions.-u-2-s2-gives-point-coordinates.-a-components-sign-can-flip-without-changing-the-represented-geometry.",
+    "href": "notebooks/titanic_live_scaffold.html#optional-connect-svd-to-pcafor-centered-x-x-u-diags-vt.-the-first-two-right-singular-vectors-define-directions.-u-2-s2-gives-point-coordinates.-a-components-sign-can-flip-without-changing-the-represented-geometry.",
+    "title": "Titanic dimensionality reduction: Live coding scaffold",
+    "section": "Optional: connect SVD to PCAFor centered X, X = U diag(s) Vt. The first two right singular vectors define directions. U[:, :2] * s[:2] gives point coordinates. A component’s sign can flip without changing the represented geometry.",
+    "text": "Optional: connect SVD to PCAFor centered X, X = U diag(s) Vt. The first two right singular vectors define directions. U[:, :2] * s[:2] gives point coordinates. A component’s sign can flip without changing the represented geometry.\n\nX_centered = X - X.mean(axis=0)U, s, Vt = np.linalg.svd(X_centered, full_matrices=False)svd_scores = U[:, :2] * s[:2]variance = s**2 / (len(X) - 1)print(\"Variance fraction from SVD:\", variance[:2].sum() / variance.sum())display(pd.DataFrame(Vt[:2].T, index=feature_names, columns=[\"PC1 weight\", \"PC2 weight\"]).round(3))print(\"Scores shape:\", svd_scores.shape)"
+  },
+  {
+    "objectID": "notebooks/titanic_live_scaffold.html#optional-a-controlled-parameter-comparisonthese-supplied-runs-hold-the-dataset-and-preprocessing-fixed.-the-example-below-compares-t-sne-perplexity-5-with-30.-use-the-same-color-variable-and-avoid-reading-between-island-distances-as-original-distances.",
+    "href": "notebooks/titanic_live_scaffold.html#optional-a-controlled-parameter-comparisonthese-supplied-runs-hold-the-dataset-and-preprocessing-fixed.-the-example-below-compares-t-sne-perplexity-5-with-30.-use-the-same-color-variable-and-avoid-reading-between-island-distances-as-original-distances.",
+    "title": "Titanic dimensionality reduction: Live coding scaffold",
+    "section": "Optional: a controlled parameter comparisonThese supplied runs hold the dataset and preprocessing fixed. The example below compares t-SNE perplexity 5 with 30. Use the same color variable and avoid reading between-island distances as original distances.",
+    "text": "Optional: a controlled parameter comparisonThese supplied runs hold the dataset and preprocessing fixed. The example below compares t-SNE perplexity 5 with 30. Use the same color variable and avoid reading between-island distances as original distances.\n\nalternative = load_variant(ROOT, \"tsne_perplexity_5\", df[\"row_id\"], X)fig, axes = plt.subplots(1, 2, figsize=(12, 4))plot_embedding(alternative, df, \"survived\", \"Perplexity 5\", axes[0])plot_embedding(load_variant(ROOT, \"tsne\", df[\"row_id\"], X), df, \"survived\", \"Perplexity 30\", axes[1])plt.tight_layout()plt.show()"
+  },
+  {
+    "objectID": "notebooks/titanic_live_scaffold.html#optional-umap-and-phate-sensitivityother-supplied-variants-umap_neighbors_5-umap_neighbors_50-umap_min_dist_08-umap_seed_7-phate_t_2-phate_t_30.-the-source-settings-and-implementation-details-appear-in-the-run-manifest.phates-t-changes-diffusion-smoothing.-it-is-not-a-time-variable-measured-on-the-passengers.-changing-settings-is-a-sensitivity-check-rather-than-a-search-for-the-prettiest-plot.next-question-which-interpretation-survives-a-reasonable-alternative-view-and-an-original-variable-check",
+    "href": "notebooks/titanic_live_scaffold.html#optional-umap-and-phate-sensitivityother-supplied-variants-umap_neighbors_5-umap_neighbors_50-umap_min_dist_08-umap_seed_7-phate_t_2-phate_t_30.-the-source-settings-and-implementation-details-appear-in-the-run-manifest.phates-t-changes-diffusion-smoothing.-it-is-not-a-time-variable-measured-on-the-passengers.-changing-settings-is-a-sensitivity-check-rather-than-a-search-for-the-prettiest-plot.next-question-which-interpretation-survives-a-reasonable-alternative-view-and-an-original-variable-check",
+    "title": "Titanic dimensionality reduction: Live coding scaffold",
+    "section": "Optional: UMAP and PHATE sensitivityOther supplied variants: umap_neighbors_5, umap_neighbors_50, umap_min_dist_08, umap_seed_7, phate_t_2, phate_t_30. The source settings and implementation details appear in the run manifest.PHATE’s t changes diffusion smoothing. It is not a time variable measured on the passengers. Changing settings is a sensitivity check rather than a search for the prettiest plot.Next question: Which interpretation survives a reasonable alternative view and an original-variable check?",
+    "text": "Optional: UMAP and PHATE sensitivityOther supplied variants: umap_neighbors_5, umap_neighbors_50, umap_min_dist_08, umap_seed_7, phate_t_2, phate_t_30. The source settings and implementation details appear in the run manifest.PHATE’s t changes diffusion smoothing. It is not a time variable measured on the passengers. Changing settings is a sensitivity check rather than a search for the prettiest plot.Next question: Which interpretation survives a reasonable alternative view and an original-variable check?"
+  },
+  {
+    "objectID": "notebooks/titanic_complete.html",
+    "href": "notebooks/titanic_complete.html",
+    "title": "Titanic dimensionality reduction: Completed reference",
+    "section": "",
+    "text": "Question: What profiles appear across passenger characteristics, and how do they relate to survival?\nAll application code is supplied. Saved runs make this notebook immediate to use; switch RECOMPUTE to True to fit nonlinear methods yourself.\nThe main live path is preparation, one fit_transform call per method, recoloring, and a return to original variables. The SVD and parameter sections are optional follow-up.\nSaved-run provenance: PCA and t-SNE use scikit-learn, PHATE uses its Python implementation, and UMAP uses the official UMAP-js implementation. The Python UMAP recomputation branch uses umap-learn and was not executable in the authoring environment. The two implementations can produce different layouts. See run details."
+  },
+  {
+    "objectID": "notebooks/titanic_complete.html#setuprun-before-class.-the-four-saved-runs-are-already-computed-for-the-bundled-data.-install-the-recompute-extra-before-using-umap-or-phate-fitting-code.",
+    "href": "notebooks/titanic_complete.html#setuprun-before-class.-the-four-saved-runs-are-already-computed-for-the-bundled-data.-install-the-recompute-extra-before-using-umap-or-phate-fitting-code.",
+    "title": "Titanic dimensionality reduction: Completed reference",
+    "section": "SetupRun before class. The four saved runs are already computed for the bundled data. Install the recompute extra before using UMAP or PHATE fitting code.",
+    "text": "SetupRun before class. The four saved runs are already computed for the bundled data. Install the recompute extra before using UMAP or PHATE fitting code.\n\nfrom pathlib import Pathimport sysimport numpy as npimport pandas as pdimport matplotlib.pyplot as pltfrom sklearn.decomposition import PCAfrom sklearn.manifold import TSNEROOT = Path.cwd()if not (ROOT / \"support/eda_helpers.py\").exists():    ROOT = ROOT.parentsys.path.insert(0, str(ROOT / \"support\"))from eda_helpers import prepare_titanic, prepare_tornadoes, load_saved, load_variant, plot_embedding# False uses supplied runs and requires only the base environment.# True recomputes nonlinear methods. First run: uv sync --extra recomputeRECOMPUTE = False"
+  },
+  {
+    "objectID": "notebooks/titanic_complete.html#prepared-features-and-plotting-metadatathe-supplied-preparation-function-imputes-numerical-fields-by-the-median-standardizes-them-and-imputesone-hot-encodes-categorical-fields.-it-retains-all-891-passengers.-open-supporteda_helpers.py-to-inspect-the-full-pipeline.-embedding-inputs-preparation-age-fare-sibsp-parch-median-imputation-then-z-scores-pclass-sex-embarked-most-frequent-imputation-then-one-hot-encoding-survived-excluded-from-inputs-retained-for-color-missingness-indicators-excluded-from-inputs-retained-for-color-the-numerical-block-and-each-categorical-block-contribute-differently-to-euclidean-distances.-this-is-one-explicit-definition-of-passenger-similarity-not-an-automatically-optimal-choice.",
+    "href": "notebooks/titanic_complete.html#prepared-features-and-plotting-metadatathe-supplied-preparation-function-imputes-numerical-fields-by-the-median-standardizes-them-and-imputesone-hot-encodes-categorical-fields.-it-retains-all-891-passengers.-open-supporteda_helpers.py-to-inspect-the-full-pipeline.-embedding-inputs-preparation-age-fare-sibsp-parch-median-imputation-then-z-scores-pclass-sex-embarked-most-frequent-imputation-then-one-hot-encoding-survived-excluded-from-inputs-retained-for-color-missingness-indicators-excluded-from-inputs-retained-for-color-the-numerical-block-and-each-categorical-block-contribute-differently-to-euclidean-distances.-this-is-one-explicit-definition-of-passenger-similarity-not-an-automatically-optimal-choice.",
+    "title": "Titanic dimensionality reduction: Completed reference",
+    "section": "Prepared features and plotting metadataThe supplied preparation function imputes numerical fields by the median, standardizes them, and imputes/one-hot encodes categorical fields. It retains all 891 passengers. Open support/eda_helpers.py to inspect the full pipeline.| Embedding inputs | Preparation ||—|—|| age, fare, sibsp, parch | Median imputation, then z-scores || pclass, sex, embarked | Most-frequent imputation, then one-hot encoding || survived | Excluded from inputs, retained for color || Missingness indicators | Excluded from inputs, retained for color |The numerical block and each categorical block contribute differently to Euclidean distances. This is one explicit definition of passenger similarity, not an automatically optimal choice.",
+    "text": "Prepared features and plotting metadataThe supplied preparation function imputes numerical fields by the median, standardizes them, and imputes/one-hot encodes categorical fields. It retains all 891 passengers. Open support/eda_helpers.py to inspect the full pipeline.| Embedding inputs | Preparation ||—|—|| age, fare, sibsp, parch | Median imputation, then z-scores || pclass, sex, embarked | Most-frequent imputation, then one-hot encoding || survived | Excluded from inputs, retained for color || Missingness indicators | Excluded from inputs, retained for color |The numerical block and each categorical block contribute differently to Euclidean distances. This is one explicit definition of passenger similarity, not an automatically optimal choice.\n\ndf, X, feature_names, preprocessor = prepare_titanic(ROOT)embeddings = {} if RECOMPUTE else load_saved(ROOT, \"titanic\", X, df[\"row_id\"])print(\"Prepared matrix:\", X.shape)print(\"Feature columns:\", feature_names)assert \"survived\" not in feature_namesdf[[\"row_id\", \"age\", \"fare\", \"pclass\", \"sex\", \"survived\"]].head()\n\nPrepared matrix: (891, 12)\nFeature columns: ['age', 'fare', 'sibsp', 'parch', 'pclass_1', 'pclass_2', 'pclass_3', 'sex_female', 'sex_male', 'embarked_C', 'embarked_Q', 'embarked_S']\n\n\n\n\n\n\n\n\n\nrow_id\nage\nfare\npclass\nsex\nsurvived\n\n\n\n\n0\n0\n22.0\n7.2500\n3\nmale\n0\n\n\n1\n1\n38.0\n71.2833\n1\nfemale\n1\n\n\n2\n2\n26.0\n7.9250\n3\nfemale\n1\n\n\n3\n3\n35.0\n53.1000\n1\nfemale\n1\n\n\n4\n4\n35.0\n8.0500\n3\nmale\n0"
+  },
+  {
+    "objectID": "notebooks/titanic_complete.html#pca-a-linear-baselinebefore-running-what-kind-of-information-does-this-method-prioritize",
+    "href": "notebooks/titanic_complete.html#pca-a-linear-baselinebefore-running-what-kind-of-information-does-this-method-prioritize",
+    "title": "Titanic dimensionality reduction: Completed reference",
+    "section": "PCA: a linear baselineBefore running: what kind of information does this method prioritize?",
+    "text": "PCA: a linear baselineBefore running: what kind of information does this method prioritize?\n\npca = PCA(n_components=2, svd_solver=\"full\")embeddings[\"PCA\"] = pca.fit_transform(X)print(\"Variance retained:\", pca.explained_variance_ratio_.sum())plot_embedding(embeddings[\"PCA\"], df, title=\"PCA: passenger profiles\")plt.tight_layout()plt.show()\n\nVariance retained: 0.5376632912409538\n\n\n\n\n\n\n\n\n\nInterpretation: PCA returns a coordinate for each passenger on each retained component. The first two retain about 53.8% of the variance of these prepared features. Variance is not a measure of relevance to survival."
+  },
+  {
+    "objectID": "notebooks/titanic_complete.html#t-sne-neighborhood-similaritiesbefore-running-what-kind-of-information-does-this-method-prioritize",
+    "href": "notebooks/titanic_complete.html#t-sne-neighborhood-similaritiesbefore-running-what-kind-of-information-does-this-method-prioritize",
+    "title": "Titanic dimensionality reduction: Completed reference",
+    "section": "t-SNE: neighborhood similaritiesBefore running: what kind of information does this method prioritize?",
+    "text": "t-SNE: neighborhood similaritiesBefore running: what kind of information does this method prioritize?\n\nif RECOMPUTE:    tsne = TSNE(n_components=2, perplexity=30, init=\"pca\",                learning_rate=\"auto\", max_iter=1000, random_state=42)    embeddings[\"t-SNE\"] = tsne.fit_transform(X)plot_embedding(embeddings[\"t-SNE\"], df, \"sex\", \"t-SNE colored by recorded sex\")plt.tight_layout()plt.show()\n\n\n\n\n\n\n\n\nInterpretation: Nearby points represent a neighborhood-based view of similarity. Inter-island spacing, island area, and point density do not provide faithful measurements of the original feature space."
+  },
+  {
+    "objectID": "notebooks/titanic_complete.html#umap-a-neighborhood-graphbefore-running-what-kind-of-information-does-this-method-prioritize",
+    "href": "notebooks/titanic_complete.html#umap-a-neighborhood-graphbefore-running-what-kind-of-information-does-this-method-prioritize",
+    "title": "Titanic dimensionality reduction: Completed reference",
+    "section": "UMAP: a neighborhood graphBefore running: what kind of information does this method prioritize?",
+    "text": "UMAP: a neighborhood graphBefore running: what kind of information does this method prioritize?\n\nif RECOMPUTE:    import umap    reducer = umap.UMAP(n_components=2, n_neighbors=15, min_dist=0.1,                        metric=\"euclidean\", random_state=42)    embeddings[\"UMAP\"] = reducer.fit_transform(X)plot_embedding(embeddings[\"UMAP\"], df, \"pclass\", \"UMAP colored by passenger class\")plt.tight_layout()plt.show()\n\n\n\n\n\n\n\n\nInterpretation: n_neighbors controls the scale of neighborhoods used to build the graph. min_dist influences how tightly the layout packs points. Neither parameter certifies that visible islands are distinct populations."
+  },
+  {
+    "objectID": "notebooks/titanic_complete.html#phate-diffusion-and-broader-structurebefore-running-what-kind-of-information-does-this-method-prioritize",
+    "href": "notebooks/titanic_complete.html#phate-diffusion-and-broader-structurebefore-running-what-kind-of-information-does-this-method-prioritize",
+    "title": "Titanic dimensionality reduction: Completed reference",
+    "section": "PHATE: diffusion and broader structureBefore running: what kind of information does this method prioritize?",
+    "text": "PHATE: diffusion and broader structureBefore running: what kind of information does this method prioritize?\n\nif RECOMPUTE:    import phate    reducer = phate.PHATE(n_components=2, knn=30, t=\"auto\",                          mds_solver=\"smacof\", random_state=42,                          n_jobs=1, verbose=0)    embeddings[\"PHATE\"] = reducer.fit_transform(X)plot_embedding(embeddings[\"PHATE\"], df, \"survived\", \"PHATE colored by survival\")plt.tight_layout()plt.show()\n\n\n\n\n\n\n\n\nInterpretation: PHATE compares diffusion profiles on a graph before producing a low-dimensional layout. This can help inspect continuous structure. Diffusion steps are not elapsed time, and a branch does not establish a passenger trajectory. We use knn=30 because repeated feature profiles occur in this dataset, retain all passengers, and add no jitter."
+  },
+  {
+    "objectID": "notebooks/titanic_complete.html#recolor-the-same-coordinateschoose-a-method-and-a-variable-then-rerun-this-cell.-recoloring-does-not-refit-the-embedding.-compare-an-input-feature-a-missingness-indicator-and-survival-which-was-withheld.options-sex-pclass-age-fare-age_is_missing-embarked_is_missing-survived.",
+    "href": "notebooks/titanic_complete.html#recolor-the-same-coordinateschoose-a-method-and-a-variable-then-rerun-this-cell.-recoloring-does-not-refit-the-embedding.-compare-an-input-feature-a-missingness-indicator-and-survival-which-was-withheld.options-sex-pclass-age-fare-age_is_missing-embarked_is_missing-survived.",
+    "title": "Titanic dimensionality reduction: Completed reference",
+    "section": "Recolor the same coordinatesChoose a method and a variable, then rerun this cell. Recoloring does not refit the embedding. Compare an input feature, a missingness indicator, and survival, which was withheld.Options: sex, pclass, age, fare, age_is_missing, embarked_is_missing, survived.",
+    "text": "Recolor the same coordinatesChoose a method and a variable, then rerun this cell. Recoloring does not refit the embedding. Compare an input feature, a missingness indicator, and survival, which was withheld.Options: sex, pclass, age, fare, age_is_missing, embarked_is_missing, survived.\n\nMETHOD = \"UMAP\"COLOR_BY = \"survived\"plot_embedding(embeddings[METHOD], df, COLOR_BY, f\"{METHOD}: {COLOR_BY}\")plt.tight_layout()plt.show()"
+  },
+  {
+    "objectID": "notebooks/titanic_complete.html#a-pattern-becomes-another-questiondoes-apparent-survival-separation-simply-reflect-passenger-class-and-sex-return-to-the-original-variables-and-compare-proportions-with-explicit-denominators.",
+    "href": "notebooks/titanic_complete.html#a-pattern-becomes-another-questiondoes-apparent-survival-separation-simply-reflect-passenger-class-and-sex-return-to-the-original-variables-and-compare-proportions-with-explicit-denominators.",
+    "title": "Titanic dimensionality reduction: Completed reference",
+    "section": "A pattern becomes another questionDoes apparent survival separation simply reflect passenger class and sex? Return to the original variables and compare proportions with explicit denominators.",
+    "text": "A pattern becomes another questionDoes apparent survival separation simply reflect passenger class and sex? Return to the original variables and compare proportions with explicit denominators.\n\ncomparison = df.groupby([\"pclass\", \"sex\"])[\"survived\"].agg(    passengers=\"size\", survivors=\"sum\", survival_proportion=\"mean\")display(comparison.round(3))ax = comparison[\"survival_proportion\"].unstack(\"sex\").plot.bar(rot=0)ax.set(xlabel=\"Passenger class\", ylabel=\"Survival proportion\", ylim=(0, 1))plt.tight_layout()plt.show()\n\n\n\n\n\n\n\n\n\npassengers\nsurvivors\nsurvival_proportion\n\n\npclass\nsex\n\n\n\n\n\n\n\n1\nfemale\n94\n91\n0.968\n\n\nmale\n122\n45\n0.369\n\n\n2\nfemale\n76\n70\n0.921\n\n\nmale\n108\n17\n0.157\n\n\n3\nfemale\n144\n72\n0.500\n\n\nmale\n347\n47\n0.135"
+  },
+  {
+    "objectID": "notebooks/titanic_complete.html#optional-inspect-a-region-and-compare-it-with-the-remaining-passengersthis-example-takes-the-rightmost-20-of-one-layout-as-a-convenient-inspection-region.-it-does-not-define-a-validated-cluster.-axis-direction-is-arbitrary-and-the-region-changes-if-the-embedding-rotates-or-changes-settings.",
+    "href": "notebooks/titanic_complete.html#optional-inspect-a-region-and-compare-it-with-the-remaining-passengersthis-example-takes-the-rightmost-20-of-one-layout-as-a-convenient-inspection-region.-it-does-not-define-a-validated-cluster.-axis-direction-is-arbitrary-and-the-region-changes-if-the-embedding-rotates-or-changes-settings.",
+    "title": "Titanic dimensionality reduction: Completed reference",
+    "section": "Optional: inspect a region and compare it with the remaining passengersThis example takes the rightmost 20% of one layout as a convenient inspection region. It does not define a validated cluster. Axis direction is arbitrary and the region changes if the embedding rotates or changes settings.",
+    "text": "Optional: inspect a region and compare it with the remaining passengersThis example takes the rightmost 20% of one layout as a convenient inspection region. It does not define a validated cluster. Axis direction is arbitrary and the region changes if the embedding rotates or changes settings.\n\ncoords = embeddings[\"UMAP\"]in_region = coords[:, 0] &gt; np.quantile(coords[:, 0], 0.8)regions = df.assign(region=np.where(in_region, \"Selected region\", \"Remaining passengers\"))display(regions.groupby(\"region\").agg(    n=(\"row_id\", \"size\"), survival=(\"survived\", \"mean\"),    average_fare=(\"fare\", \"mean\"), missing_age=(\"age_is_missing\", \"mean\")).round(3))display(pd.crosstab(regions[\"region\"], regions[\"pclass\"], normalize=\"index\").round(3))\n\n\n\n\n\n\n\n\nn\nsurvival\naverage_fare\nmissing_age\n\n\nregion\n\n\n\n\n\n\n\n\nRemaining passengers\n713\n0.447\n37.218\n0.192\n\n\nSelected region\n178\n0.129\n12.122\n0.225\n\n\n\n\n\n\n\n\n\n\n\n\n\npclass\n1\n2\n3\n\n\nregion\n\n\n\n\n\n\n\nRemaining passengers\n0.281\n0.258\n0.461\n\n\nSelected region\n0.090\n0.000\n0.910"
+  },
+  {
+    "objectID": "notebooks/titanic_complete.html#optional-connect-svd-to-pcafor-centered-x-x-u-diags-vt.-the-first-two-right-singular-vectors-define-directions.-u-2-s2-gives-point-coordinates.-a-components-sign-can-flip-without-changing-the-represented-geometry.",
+    "href": "notebooks/titanic_complete.html#optional-connect-svd-to-pcafor-centered-x-x-u-diags-vt.-the-first-two-right-singular-vectors-define-directions.-u-2-s2-gives-point-coordinates.-a-components-sign-can-flip-without-changing-the-represented-geometry.",
+    "title": "Titanic dimensionality reduction: Completed reference",
+    "section": "Optional: connect SVD to PCAFor centered X, X = U diag(s) Vt. The first two right singular vectors define directions. U[:, :2] * s[:2] gives point coordinates. A component’s sign can flip without changing the represented geometry.",
+    "text": "Optional: connect SVD to PCAFor centered X, X = U diag(s) Vt. The first two right singular vectors define directions. U[:, :2] * s[:2] gives point coordinates. A component’s sign can flip without changing the represented geometry.\n\nX_centered = X - X.mean(axis=0)U, s, Vt = np.linalg.svd(X_centered, full_matrices=False)svd_scores = U[:, :2] * s[:2]variance = s**2 / (len(X) - 1)print(\"Variance fraction from SVD:\", variance[:2].sum() / variance.sum())display(pd.DataFrame(Vt[:2].T, index=feature_names, columns=[\"PC1 weight\", \"PC2 weight\"]).round(3))print(\"Scores shape:\", svd_scores.shape)\n\nVariance fraction from SVD: 0.5376632912409538\nScores shape: (891, 2)\n\n\n\n\n\n\n\n\n\nPC1 weight\nPC2 weight\n\n\n\n\nage\n0.332\n-0.584\n\n\nfare\n-0.340\n-0.687\n\n\nsibsp\n-0.603\n0.122\n\n\nparch\n-0.616\n-0.020\n\n\npclass_1\n-0.019\n-0.277\n\n\npclass_2\n0.020\n0.011\n\n\npclass_3\n-0.001\n0.266\n\n\nsex_female\n-0.122\n-0.061\n\n\nsex_male\n0.122\n0.061\n\n\nembarked_C\n-0.013\n-0.103\n\n\nembarked_Q\n0.016\n0.031\n\n\nembarked_S\n-0.002\n0.072"
+  },
+  {
+    "objectID": "notebooks/titanic_complete.html#optional-a-controlled-parameter-comparisonthese-supplied-runs-hold-the-dataset-and-preprocessing-fixed.-the-example-below-compares-t-sne-perplexity-5-with-30.-use-the-same-color-variable-and-avoid-reading-between-island-distances-as-original-distances.",
+    "href": "notebooks/titanic_complete.html#optional-a-controlled-parameter-comparisonthese-supplied-runs-hold-the-dataset-and-preprocessing-fixed.-the-example-below-compares-t-sne-perplexity-5-with-30.-use-the-same-color-variable-and-avoid-reading-between-island-distances-as-original-distances.",
+    "title": "Titanic dimensionality reduction: Completed reference",
+    "section": "Optional: a controlled parameter comparisonThese supplied runs hold the dataset and preprocessing fixed. The example below compares t-SNE perplexity 5 with 30. Use the same color variable and avoid reading between-island distances as original distances.",
+    "text": "Optional: a controlled parameter comparisonThese supplied runs hold the dataset and preprocessing fixed. The example below compares t-SNE perplexity 5 with 30. Use the same color variable and avoid reading between-island distances as original distances.\n\nalternative = load_variant(ROOT, \"tsne_perplexity_5\", df[\"row_id\"], X)fig, axes = plt.subplots(1, 2, figsize=(12, 4))plot_embedding(alternative, df, \"survived\", \"Perplexity 5\", axes[0])plot_embedding(load_variant(ROOT, \"tsne\", df[\"row_id\"], X), df, \"survived\", \"Perplexity 30\", axes[1])plt.tight_layout()plt.show()"
+  },
+  {
+    "objectID": "notebooks/titanic_complete.html#optional-umap-and-phate-sensitivityother-supplied-variants-umap_neighbors_5-umap_neighbors_50-umap_min_dist_08-umap_seed_7-phate_t_2-phate_t_30.-the-source-settings-and-implementation-details-appear-in-the-run-manifest.phates-t-changes-diffusion-smoothing.-it-is-not-a-time-variable-measured-on-the-passengers.-changing-settings-is-a-sensitivity-check-rather-than-a-search-for-the-prettiest-plot.next-question-which-interpretation-survives-a-reasonable-alternative-view-and-an-original-variable-check",
+    "href": "notebooks/titanic_complete.html#optional-umap-and-phate-sensitivityother-supplied-variants-umap_neighbors_5-umap_neighbors_50-umap_min_dist_08-umap_seed_7-phate_t_2-phate_t_30.-the-source-settings-and-implementation-details-appear-in-the-run-manifest.phates-t-changes-diffusion-smoothing.-it-is-not-a-time-variable-measured-on-the-passengers.-changing-settings-is-a-sensitivity-check-rather-than-a-search-for-the-prettiest-plot.next-question-which-interpretation-survives-a-reasonable-alternative-view-and-an-original-variable-check",
+    "title": "Titanic dimensionality reduction: Completed reference",
+    "section": "Optional: UMAP and PHATE sensitivityOther supplied variants: umap_neighbors_5, umap_neighbors_50, umap_min_dist_08, umap_seed_7, phate_t_2, phate_t_30. The source settings and implementation details appear in the run manifest.PHATE’s t changes diffusion smoothing. It is not a time variable measured on the passengers. Changing settings is a sensitivity check rather than a search for the prettiest plot.Next question: Which interpretation survives a reasonable alternative view and an original-variable check?",
+    "text": "Optional: UMAP and PHATE sensitivityOther supplied variants: umap_neighbors_5, umap_neighbors_50, umap_min_dist_08, umap_seed_7, phate_t_2, phate_t_30. The source settings and implementation details appear in the run manifest.PHATE’s t changes diffusion smoothing. It is not a time variable measured on the passengers. Changing settings is a sensitivity check rather than a search for the prettiest plot.Next question: Which interpretation survives a reasonable alternative view and an original-variable check?"
+  },
+  {
+    "objectID": "notebooks/tornado_complete.html",
+    "href": "notebooks/tornado_complete.html",
+    "title": "Tornado dimensionality reduction: Completed reference",
+    "section": "",
+    "text": "Optional practice after the main Titanic lesson. The original dataset has 4,706 whole tracks from 2015-2018. This exercise uses a fixed 700-record sample for speed.\nQuestion: What profiles appear across track size and starting location, and how do those profiles relate to EF rating?\nThe inputs are standardized log1p length, log1p width, starting latitude, and starting longitude. EF rating, month, start-state labels, injuries, and fatalities are withheld. Longitude/latitude here are exploratory features, not a precise physical-distance model.\nAll four saved methods are supplied. The same UMAP-js versus Python umap-learn provenance note applies as in Titanic. See run details."
+  },
+  {
+    "objectID": "notebooks/tornado_complete.html#setup-and-prepared-featureskeep-missing-ef-ratings-as-missing.-they-do-not-prevent-fitting-these-four-complete-input-features.",
+    "href": "notebooks/tornado_complete.html#setup-and-prepared-featureskeep-missing-ef-ratings-as-missing.-they-do-not-prevent-fitting-these-four-complete-input-features.",
+    "title": "Tornado dimensionality reduction: Completed reference",
+    "section": "Setup and prepared featuresKeep missing EF ratings as missing. They do not prevent fitting these four complete input features.",
+    "text": "Setup and prepared featuresKeep missing EF ratings as missing. They do not prevent fitting these four complete input features.\n\nfrom pathlib import Pathimport sysimport numpy as npimport pandas as pdimport matplotlib.pyplot as pltfrom sklearn.decomposition import PCAfrom sklearn.manifold import TSNEROOT = Path.cwd()if not (ROOT / \"support/eda_helpers.py\").exists():    ROOT = ROOT.parentsys.path.insert(0, str(ROOT / \"support\"))from eda_helpers import prepare_titanic, prepare_tornadoes, load_saved, load_variant, plot_embedding# False uses supplied runs and requires only the base environment.# True recomputes nonlinear methods. First run: uv sync --extra recomputeRECOMPUTE = Falsedf, X, feature_names = prepare_tornadoes(ROOT, include_location=True)embeddings = {} if RECOMPUTE else load_saved(ROOT, \"tornadoes\", X, df[\"tornado_id\"])print(\"Fixed practice sample:\", len(df), \"records\")print(\"Embedding features:\", feature_names)\n\nFixed practice sample: 700 records\nEmbedding features: ['log1p_length', 'log1p_width', 'start_latitude', 'start_longitude']"
+  },
+  {
+    "objectID": "notebooks/tornado_complete.html#a-familiar-starting-viewcompare-size-variables-directly-before-interpreting-their-multivariable-embedding.-the-transformations-reduce-domination-by-very-large-recorded-tracks.",
+    "href": "notebooks/tornado_complete.html#a-familiar-starting-viewcompare-size-variables-directly-before-interpreting-their-multivariable-embedding.-the-transformations-reduce-domination-by-very-large-recorded-tracks.",
+    "title": "Tornado dimensionality reduction: Completed reference",
+    "section": "A familiar starting viewCompare size variables directly before interpreting their multivariable embedding. The transformations reduce domination by very large recorded tracks.",
+    "text": "A familiar starting viewCompare size variables directly before interpreting their multivariable embedding. The transformations reduce domination by very large recorded tracks.\n\nplt.scatter(np.log1p(df[\"path_length_miles\"]), np.log1p(df[\"max_width_yards\"]), s=15, alpha=0.6)plt.xlabel(\"log(1 + path length in miles)\")plt.ylabel(\"log(1 + maximum width in yards)\")plt.tight_layout()plt.show()"
+  },
+  {
+    "objectID": "notebooks/tornado_complete.html#pca-a-linear-baseline",
+    "href": "notebooks/tornado_complete.html#pca-a-linear-baseline",
+    "title": "Tornado dimensionality reduction: Completed reference",
+    "section": "PCA: a linear baseline",
+    "text": "PCA: a linear baseline\n\npca = PCA(n_components=2, svd_solver=\"full\")embeddings[\"PCA\"] = pca.fit_transform(X)print(\"Variance retained:\", pca.explained_variance_ratio_.sum())plot_embedding(embeddings[\"PCA\"], df, title=\"PCA: tornado profiles\")plt.tight_layout()plt.show()\n\nVariance retained: 0.686866028874001"
+  },
+  {
+    "objectID": "notebooks/tornado_complete.html#t-sne-neighborhood-similarities",
+    "href": "notebooks/tornado_complete.html#t-sne-neighborhood-similarities",
+    "title": "Tornado dimensionality reduction: Completed reference",
+    "section": "t-SNE: neighborhood similarities",
+    "text": "t-SNE: neighborhood similarities\n\nif RECOMPUTE:    tsne = TSNE(n_components=2, perplexity=30, init=\"pca\",                learning_rate=\"auto\", max_iter=1000, random_state=42)    embeddings[\"t-SNE\"] = tsne.fit_transform(X)plot_embedding(embeddings[\"t-SNE\"], df, \"ef_rating\", \"t-SNE colored by EF rating\")plt.tight_layout()plt.show()"
+  },
+  {
+    "objectID": "notebooks/tornado_complete.html#umap-a-neighborhood-graph",
+    "href": "notebooks/tornado_complete.html#umap-a-neighborhood-graph",
+    "title": "Tornado dimensionality reduction: Completed reference",
+    "section": "UMAP: a neighborhood graph",
+    "text": "UMAP: a neighborhood graph\n\nif RECOMPUTE:    import umap    reducer = umap.UMAP(n_components=2, n_neighbors=15, min_dist=0.1,                        metric=\"euclidean\", random_state=42)    embeddings[\"UMAP\"] = reducer.fit_transform(X)plot_embedding(embeddings[\"UMAP\"], df, \"ef_rating\", \"UMAP colored by EF rating\")plt.tight_layout()plt.show()"
+  },
+  {
+    "objectID": "notebooks/tornado_complete.html#phate-diffusion-and-broader-structure",
+    "href": "notebooks/tornado_complete.html#phate-diffusion-and-broader-structure",
+    "title": "Tornado dimensionality reduction: Completed reference",
+    "section": "PHATE: diffusion and broader structure",
+    "text": "PHATE: diffusion and broader structure\n\nif RECOMPUTE:    import phate    reducer = phate.PHATE(n_components=2, knn=30, t=\"auto\",                          mds_solver=\"smacof\", random_state=42,                          n_jobs=1, verbose=0)    embeddings[\"PHATE\"] = reducer.fit_transform(X)plot_embedding(embeddings[\"PHATE\"], df, \"ef_rating\", \"PHATE colored by EF rating\")plt.tight_layout()plt.show()"
+  },
+  {
+    "objectID": "notebooks/tornado_complete.html#investigate-a-question-using-colortry-ef_rating-month-path_length_miles-max_width_yards-start_state-or-start_latitude.-which-overlays-describe-features-already-used-to-construct-the-geometry-which-supply-withheld-information",
+    "href": "notebooks/tornado_complete.html#investigate-a-question-using-colortry-ef_rating-month-path_length_miles-max_width_yards-start_state-or-start_latitude.-which-overlays-describe-features-already-used-to-construct-the-geometry-which-supply-withheld-information",
+    "title": "Tornado dimensionality reduction: Completed reference",
+    "section": "Investigate a question using colorTry ef_rating, month, path_length_miles, max_width_yards, start_state, or start_latitude. Which overlays describe features already used to construct the geometry? Which supply withheld information?",
+    "text": "Investigate a question using colorTry ef_rating, month, path_length_miles, max_width_yards, start_state, or start_latitude. Which overlays describe features already used to construct the geometry? Which supply withheld information?\n\nMETHOD = \"PHATE\"COLOR_BY = \"ef_rating\"plot_embedding(embeddings[METHOD], df, COLOR_BY, f\"{METHOD}: {COLOR_BY}\")plt.tight_layout()plt.show()"
+  },
+  {
+    "objectID": "notebooks/tornado_complete.html#return-to-original-variablesinspect-the-number-of-observed-ratings-before-comparing-sizes-across-ef-categories.-this-is-a-descriptive-comparison-within-the-practice-sample-not-a-population-risk-estimate.",
+    "href": "notebooks/tornado_complete.html#return-to-original-variablesinspect-the-number-of-observed-ratings-before-comparing-sizes-across-ef-categories.-this-is-a-descriptive-comparison-within-the-practice-sample-not-a-population-risk-estimate.",
+    "title": "Tornado dimensionality reduction: Completed reference",
+    "section": "Return to original variablesInspect the number of observed ratings before comparing sizes across EF categories. This is a descriptive comparison within the practice sample, not a population risk estimate.",
+    "text": "Return to original variablesInspect the number of observed ratings before comparing sizes across EF categories. This is a descriptive comparison within the practice sample, not a population risk estimate.\n\nrated = df.dropna(subset=[\"ef_rating\"])print(f\"Observed EF rating: {len(rated)} of {len(df)} sample records\")display(rated.groupby(\"ef_rating\").agg(    n=(\"tornado_id\", \"size\"),    median_length_miles=(\"path_length_miles\", \"median\"),    median_width_yards=(\"max_width_yards\", \"median\")).round(2))\n\nObserved EF rating: 679 of 700 sample records\n\n\n\n\n\n\n\n\n\nn\nmedian_length_miles\nmedian_width_yards\n\n\nef_rating\n\n\n\n\n\n\n\n0\n358\n0.56\n50.0\n\n\n1\n270\n2.72\n150.0\n\n\n2\n39\n7.42\n400.0\n\n\n3\n12\n15.35\n550.0"
+  },
+  {
+    "objectID": "notebooks/tornado_complete.html#further-practice--compare-a-size-only-pca-with-the-size-and-location-pca.-prepare_tornadoesroot-include_locationfalse-provides-the-two-size-inputs.-why-is-a-direct-two-variable-scatter-already-informative-in-that-case--explain-how-including-geography-influences-the-meaning-of-a-visible-grouping.--identify-a-question-this-dataset-cannot-answer-without-additional-information.saved-coordinates-are-tied-to-the-supplied-feature-matrix.-changed-preparation-requires-recomputation-not-reuse-of-the-old-cache.",
+    "href": "notebooks/tornado_complete.html#further-practice--compare-a-size-only-pca-with-the-size-and-location-pca.-prepare_tornadoesroot-include_locationfalse-provides-the-two-size-inputs.-why-is-a-direct-two-variable-scatter-already-informative-in-that-case--explain-how-including-geography-influences-the-meaning-of-a-visible-grouping.--identify-a-question-this-dataset-cannot-answer-without-additional-information.saved-coordinates-are-tied-to-the-supplied-feature-matrix.-changed-preparation-requires-recomputation-not-reuse-of-the-old-cache.",
+    "title": "Tornado dimensionality reduction: Completed reference",
+    "section": "Further practice- Compare a size-only PCA with the size-and-location PCA. prepare_tornadoes(ROOT, include_location=False) provides the two size inputs. Why is a direct two-variable scatter already informative in that case?- Explain how including geography influences the meaning of a visible grouping.- Identify a question this dataset cannot answer without additional information.Saved coordinates are tied to the supplied feature matrix. Changed preparation requires recomputation, not reuse of the old cache.",
+    "text": "Further practice- Compare a size-only PCA with the size-and-location PCA. prepare_tornadoes(ROOT, include_location=False) provides the two size inputs. Why is a direct two-variable scatter already informative in that case?- Explain how including geography influences the meaning of a visible grouping.- Identify a question this dataset cannot answer without additional information.Saved coordinates are tied to the supplied feature matrix. Changed preparation requires recomputation, not reuse of the old cache."
+  },
+  {
+    "objectID": "slides.html#review-what-made-the-next-plot-useful",
+    "href": "slides.html#review-what-made-the-next-plot-useful",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "Review: what made the next plot useful?",
+    "text": "Review: what made the next plot useful?\nIn Day 1, we moved from survivor counts to survival proportions, then added recorded sex through color.\nWhat did each new view help us understand?\nWhich other passenger characteristics might matter together?\n\n0:00-1:30 including title. Ask for a brief partner response, then one contribution. Expected: group sizes supply denominators, color adds a comparison, and age/fare/family may distinguish passenger profiles. Keep the question-driven EDA cycle visible throughout this lecture."
+  },
+  {
+    "objectID": "slides.html#the-question-now-involves-several-variables",
+    "href": "slides.html#the-question-now-involves-several-variables",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "The question now involves several variables",
+    "text": "The question now involves several variables\nWhich passengers have similar profiles across age, fare, family size, class, and embarkation?\nHow do those profiles relate to survival?\nWe will construct the representation using passenger characteristics, then overlay survival afterward.\n\n1:30-3:00. Distinguish features that determine coordinates from metadata used only for color. Sex is an embedding input in this example. Survival and missingness indicators are withheld. The representation helps generate questions and does not by itself establish causes or predictive accuracy."
+  },
+  {
+    "objectID": "slides.html#preparation-defines-passenger-similarity",
+    "href": "slides.html#preparation-defines-passenger-similarity",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "Preparation defines passenger similarity",
+    "text": "Preparation defines passenger similarity\n\n\n\n\n\n\n\nInput block\nPreparation\n\n\n\n\nage, fare, sibsp, parch\nMedian imputation, then standardization\n\n\npclass, sex, embarked\nMost-frequent imputation, then one-hot encoding\n\n\nsurvived\nWithheld for interpretation\n\n\nMissingness indicators\nWithheld for a data-quality check\n\n\n\nThe result is 891 passengers by 12 features.\nEach choice affects which passengers count as similar.\n\n3:00-5:00. The pipeline retains every passenger. Numerical standardization prevents differences in units alone from dominating, while full one-hot categorical blocks contribute their own distances. This is a transparent choice of geometry, not an automatically correct mixed-data metric. PCA subsequently centers every prepared column. Median imputation can create patterns worth checking with a missingness overlay. Source: support/eda_helpers.py and bundled Titanic data."
+  },
+  {
+    "objectID": "slides.html#pca-chooses-directions-for-a-projection",
+    "href": "slides.html#pca-chooses-directions-for-a-projection",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "PCA chooses directions for a projection",
+    "text": "PCA chooses directions for a projection\n\nA synthetic two-variable cloud with perpendicular principal directions and its projection onto PC1.PC1 maximizes the variance of projected coordinates. Later directions are perpendicular and capture remaining variance.\n\n5:00-7:00. Explain the orange direction as PC2 and the teal direction as PC1. A projection retains coordinates along selected directions and loses the perpendicular information. This figure is an explicitly synthetic geometry example, not Titanic data. Sources: standard PCA geometry and scikit-learn PCA documentation."
+  },
+  {
+    "objectID": "slides.html#directions-and-point-coordinates-are-different",
+    "href": "slides.html#directions-and-point-coordinates-are-different",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "Directions and point coordinates are different",
+    "text": "Directions and point coordinates are different\nA component direction gives a weight to each original feature.\nA component score gives an observation’s coordinate along that direction.\n\\[\nz_{i1} = (x_i - \\bar{x})^\\top v_1\n\\]\nAll passengers use the same direction. Their feature values produce different coordinates.\n\n7:00-8:00. This distinction prepares the SVD bridge. Feature weights live in the original p-dimensional space. Scores live with the n observations. Do not call U alone the plotted PCA coordinates. Source: PCA definition and scikit-learn components_/transform conventions."
+  },
+  {
+    "objectID": "slides.html#svd-supplies-the-directions-and-coordinates",
+    "href": "slides.html#svd-supplies-the-directions-and-coordinates",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "SVD supplies the directions and coordinates",
+    "text": "SVD supplies the directions and coordinates\nFor the centered prepared matrix:\n\\[\nX_c = U\\Sigma V^\\top\n\\]\n\\[\nZ_k = X_c V_k = U_k\\Sigma_k\n\\]\n\n\n\n\n\n\n\nObject\nRole in this example\n\n\n\n\nColumns of V\nComponent directions across the 12 features\n\n\nFirst two columns of U multiplied by their singular values\nTwo coordinates for each of 891 passengers\n\n\nFirst two columns of Z\nThe PCA scatterplot\n\n\n\n\n8:00-10:00. Use reduced SVD, so U is n by p, Sigma is p by p, and V is p by p for this n&gt;p example. Retaining k=2 gives scores n by 2 and directions p by 2. sklearn stores the directions as rows of components_, so components_.T corresponds to V_k. A simultaneous sign flip in a direction and its scores does not change the geometry. The covariance/eigenvalue connection is in an optional appendix."
+  },
+  {
+    "objectID": "slides.html#a-small-score-calculation",
+    "href": "slides.html#a-small-score-calculation",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "A small score calculation",
+    "text": "A small score calculation\nSuppose a centered observation is (2, 1) and a component direction is (1, 1) divided by the square root of 2.\n\\[\nz = \\frac{2+1}{\\sqrt{2}} \\approx 2.12\n\\]\nThat is the observation’s coordinate on this component.\nWhat changes if we reverse the component’s direction?\n\n10:00-11:00. A short conceptual check. Reversing the direction changes the sign of the score and reflects the axis, with no new information. This is a toy numerical example, not a passenger. The observation must use the centered/prepared feature scale."
+  },
+  {
+    "objectID": "slides.html#two-dimensions-leave-information-out",
+    "href": "slides.html#two-dimensions-leave-information-out",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "Two dimensions leave information out",
+    "text": "Two dimensions leave information out\n\nIndividual and cumulative explained variance for the 12 prepared Titanic features.The first two components retain 53.8% of prepared-feature variance in this snapshot.\nVariance retained does not measure how well we explain survival.\n\n11:00-12:30. Point to the remaining components. Overlap in a two-dimensional view does not establish that no structure exists in the original features. Redundant one-hot columns produce some zero-variance directions. That detail is optional. Source: actual PCA fit on the supplied feature matrix using scikit-learn."
+  },
+  {
+    "objectID": "slides.html#component-weights-help-interpret-the-axes",
+    "href": "slides.html#component-weights-help-interpret-the-axes",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "Component weights help interpret the axes",
+    "text": "Component weights help interpret the axes\n\nPC1 and PC2 component weights for the 12 prepared features.Large absolute weights identify features contributing strongly to a direction.\nRead the weights together with the original variables. Signs depend on axis orientation.\n\n12:30-14:00. Pick one high-weight feature from the actual heatmap and explain how it contributes to a score. These are entries of V, or PCA.components_.T. Some sources use loading for scaled eigenvectors; call these component weights to avoid ambiguity. The outcome is absent from X. Source: the supplied PCA fit."
+  },
+  {
+    "objectID": "slides.html#scaling-changes-the-directions-pca-chooses",
+    "href": "slides.html#scaling-changes-the-directions-pca-chooses",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "Scaling changes the directions PCA chooses",
+    "text": "Scaling changes the directions PCA chooses\n\nA synthetic cloud with one feature measured in much larger units and the standardized version.PCA centers its input. It does not automatically standardize its columns.\n\n14:00-16:00. The orange line shows the actual first principal direction in each feature scale. The observations are the same synthetic example with different units. Standardization is a modeling decision, not a ritual. A feature whose natural variance matters may deserve a different weighting. Sources: scikit-learn PCA and StandardScaler documentation."
+  },
+  {
+    "objectID": "slides.html#quick-check-the-most-relevant-direction",
+    "href": "slides.html#quick-check-the-most-relevant-direction",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "Quick check: the most relevant direction",
+    "text": "Quick check: the most relevant direction\nPCA finds a direction with large variance across passenger characteristics.\nDoes that guarantee it separates survivors from nonsurvivors?\nWhat information would PCA need to optimize separation by survival?\n\n16:00-17:00. Give 20 seconds with a partner. Answer: no guarantee. Survival is not an input or objective here. A supervised separation objective would be a different task. Keep the focus on EDA rather than introducing another algorithm."
+  },
+  {
+    "objectID": "slides.html#t-sne-matches-neighborhood-similarities",
+    "href": "slides.html#t-sne-matches-neighborhood-similarities",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "t-SNE matches neighborhood similarities",
+    "text": "t-SNE matches neighborhood similarities\n\nConvert original distances into similarities, with a local scale around each point.\nRepresent similarities in the low-dimensional view using a heavy-tailed distribution.\nMove points to make the two similarity patterns agree.\n\nPerplexity controls an effective neighborhood scale. It is not an exact neighbor count.\n\n17:00-20:00. Original affinities use adaptive Gaussian bandwidths, then symmetric probabilities. The embedding uses Student-t affinities. Optimization minimizes KL divergence and is nonconvex. The heavy tail helps address crowding. The mathematics can remain at this mechanism level, with an optional objective in the notebook/Sources. Source: https://scikit-learn.org/stable/modules/manifold.html#t-distributed-stochastic-neighbor-embedding-t-sne and van der Maaten and Hinton, 2008."
+  },
+  {
+    "objectID": "slides.html#perplexity-changes-the-view",
+    "href": "slides.html#perplexity-changes-the-view",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "Perplexity changes the view",
+    "text": "Perplexity changes the view\n\nTitanic t-SNE embeddings at perplexity 5 and 30, with survival overlaid using the same palette.The data, preparation, and coloring stay fixed. The neighborhood scale changes.\n\n20:00-22:00. These are actual scikit-learn runs with max_iter=1000, init=pca, learning_rate=auto, random_state=42. Ask which interpretations persist. Avoid comparing raw axis coordinates or selecting the plot that gives the most attractive separation. Source: supplied parameter runs and scikit-learn t-SNE documentation."
+  },
+  {
+    "objectID": "slides.html#a-t-sne-island-suggests-a-question",
+    "href": "slides.html#a-t-sne-island-suggests-a-question",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "A t-SNE island suggests a question",
+    "text": "A t-SNE island suggests a question\nWhich original features distinguish these observations?\nDoes the pattern persist with another reasonable setting or initialization?\nCheck the original variables before calling it a distinct group.\nIsland area, density, and between-island spacing need careful interpretation.\n\n22:00-24:00. Do not teach that every isolated group is fake or that the view is useless. The point is to investigate what created the grouping and whether the interpretation survives checks. Global distances are not the t-SNE objective. Source: scikit-learn manifold learning guide and original t-SNE paper."
+  },
+  {
+    "objectID": "slides.html#umap-builds-a-weighted-neighborhood-graph",
+    "href": "slides.html#umap-builds-a-weighted-neighborhood-graph",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "UMAP builds a weighted neighborhood graph",
+    "text": "UMAP builds a weighted neighborhood graph\n\nAn illustrative nearest-neighbor graph on a synthetic point set.UMAP adapts local distance scales, weights neighborhood connections, and optimizes a low-dimensional layout to represent them.\n\n24:00-27:00. This figure is a simple 3-nearest-neighbor illustration, not the exact UMAP fuzzy graph. UMAP constructs locally scaled, weighted relationships and combines directed neighborhood memberships. Its layout uses attractive and repulsive terms. No topology derivation is required today. Source: https://umap-learn.readthedocs.io/en/latest/how_umap_works.html."
+  },
+  {
+    "objectID": "slides.html#umaps-parameters-express-different-choices",
+    "href": "slides.html#umaps-parameters-express-different-choices",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "UMAP’s parameters express different choices",
+    "text": "UMAP’s parameters express different choices\n\nSaved UMAP reference runs with 5, 15, and 50 neighbors.n_neighbors: scale of the neighborhood context.\nmin_dist: how tightly the optimized layout tends to pack points.\n\n27:00-30:00. min_dist influences the low-dimensional distance curve rather than imposing a literal hard lower bound on every point pair. The min_dist comparison is in the appendix and explorer. Low values can make groups look compact without proving stronger separation in original features. Saved runs use the official UMAP-js implementation, described in run_details.qmd; Python code uses umap-learn. Source: UMAP parameter documentation."
+  },
+  {
+    "objectID": "slides.html#phate-compares-diffusion-profiles",
+    "href": "slides.html#phate-compares-diffusion-profiles",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "PHATE compares diffusion profiles",
+    "text": "PHATE compares diffusion profiles\n\nA simple graph walk spreads probability over more nodes as the number of steps increases.PHATE builds a graph, diffuses through it, compares the resulting profiles, and lays out those relationships.\n\n30:00-32:00. This is a toy random-walk illustration, not the exact PHATE kernel. PHATE uses a diffusion operator and potential distances, followed by a low-dimensional MDS layout. The intuition is that several paths through local neighborhoods can describe broader connectivity. No derivation today. Sources: Moon et al., 2019, and PHATE API documentation."
+  },
+  {
+    "objectID": "slides.html#phate-adds-a-useful-exploratory-view",
+    "href": "slides.html#phate-adds-a-useful-exploratory-view",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "PHATE adds a useful exploratory view",
+    "text": "PHATE adds a useful exploratory view\nContinuous patterns and transitions are useful structures to investigate.\nknn controls neighborhood construction.\nt controls diffusion smoothing. We use t=\"auto\" for the main example.\nDiffusion steps are not observed time. A branch in Titanic does not establish a passenger trajectory.\n\n32:00-34:00. PHATE was developed in settings including biological transitions, but it can be used on other feature matrices. Smoothing can hide fine structure and outcomes depend on the representation and settings. knn=30 handles the repeated passenger profiles in this example without removing people or adding jitter. Both the actual PHATE plot and t sensitivity runs are available for exploration. Sources: https://phate.readthedocs.io/en/stable/api.html and Moon et al., 2019."
+  },
+  {
+    "objectID": "slides.html#live-titanic-exploration",
+    "href": "slides.html#live-titanic-exploration",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "Live Titanic exploration",
+    "text": "Live Titanic exploration\nOpen titanic_live_scaffold.ipynb in Positron.\nCreate or load the four representations, then choose one to inspect.\nKeep the prepared data fixed while comparing methods.\nSaved runs are supplied so we can spend time interpreting the results.\n\n34:00-35:00. Setup and cached coordinates should already be loaded. The scaffold includes supplied helper code and fill-in method cells. Choose whether to recompute after installing the recompute extra. PCA can be fitted directly in either mode. Keep titanic_complete.ipynb open as reference. Pre-run Python UMAP before class if you will recompute, because numba compilation can be slow on first use."
+  },
+  {
+    "objectID": "slides.html#color-is-a-tool-for-asking-another-question",
+    "href": "slides.html#color-is-a-tool-for-asking-another-question",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "Color is a tool for asking another question",
+    "text": "Color is a tool for asking another question\n\nThe same saved UMAP coordinates colored by recorded sex and survival.Which overlays reflect inputs? Which add withheld information?\n\n35:00-41:00, mostly in the notebook or browser explorer. Change only COLOR_BY, keeping coordinates fixed. Try sex, pclass, survived, and age_is_missing. An input overlay may explain how geometry was constructed. A withheld survival overlay suggests association questions. Missingness can reveal imputation effects without proving a missing-data mechanism. Source: supplied features, metadata, and saved coordinates."
+  },
+  {
+    "objectID": "slides.html#an-embedding-leads-back-to-the-original-data",
+    "href": "slides.html#an-embedding-leads-back-to-the-original-data",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "An embedding leads back to the original data",
+    "text": "An embedding leads back to the original data\nSelect a region and inspect the passengers behind it.\nCompare their class, sex, fare, missingness, and survival with the remaining passengers.\nUse an original-variable plot or table to investigate the explanation.\n\n41:00-46:00. Use lasso/box selection in explorer.html or the reproducible region inspection in the completed notebook. A selected region is an inspection convenience, not a validated cluster. Follow up with the Day 1 class-by-sex survival table and explicit denominators. Ask a student to propose a next check. Geometric selection alone does not establish a causal story."
+  },
+  {
+    "objectID": "slides.html#different-objectives-create-different-views",
+    "href": "slides.html#different-objectives-create-different-views",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "Different objectives create different views",
+    "text": "Different objectives create different views\n\n\n\n\n\n\n\n\nMethod\nMain construction\nUseful interpretation\n\n\n\n\nPCA\nLinear projection retaining variance\nComponent weights and variance retained\n\n\nt-SNE\nMatch neighborhood similarities\nLocal groupings to investigate\n\n\nUMAP\nRepresent a weighted neighborhood graph\nNeighborhood patterns at chosen scales\n\n\nPHATE\nCompare diffusion profiles\nSmoother connectivity and continuous patterns\n\n\n\nEvery view compresses information. The best next check depends on the question.\n\n46:00-48:00. Do not rank methods by how separated the labels look. Return to the question and what information each objective preserves or distorts. The supplied four-method figure can be used after class as a comparison reference."
+  },
+  {
+    "objectID": "slides.html#exit-check-how-strong-is-the-claim",
+    "href": "slides.html#exit-check-how-strong-is-the-claim",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "Exit check: how strong is the claim?",
+    "text": "Exit check: how strong is the claim?\n“This map shows three islands, so there are three kinds of passengers.”\nWhat would you check before accepting that claim?\nName one original-variable comparison and one sensitivity check.\n\n48:00-50:00. Expected: inspect original feature profiles and sample sizes, examine missingness/preparation, change a justified setting/seed, compare a different method or direct plot, and avoid treating a two-dimensional view as a clustering certificate. A stable view adds evidence without proving the claim. Ask students to state a next question in concrete terms."
+  },
+  {
+    "objectID": "slides.html#extra-practice-tornado-profiles",
+    "href": "slides.html#extra-practice-tornado-profiles",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "Extra practice: tornado profiles",
+    "text": "Extra practice: tornado profiles\nOpen tornado_practice.ipynb.\nUse the fixed 700-record sample. Construct profiles using transformed track size and starting location.\nOverlay EF rating, which was withheld from the embedding inputs.\nThen compare with the original size measurements. How does including geography change the meaning of similarity?\n\nOptional, unscheduled. The original CSV covers 4,706 tracks from 2015-2018. The practice subset uses random_state=386, followed by stable ID ordering. Four features: standardized log1p length, log1p width, starting latitude and longitude. EF, outcomes and time are excluded. The completed version supplies all four methods. This is an exploratory sample, not a population risk estimate or precise geodesic-distance model."
+  },
+  {
+    "objectID": "slides.html#appendix-svd-and-covariance-eigenvectors",
+    "href": "slides.html#appendix-svd-and-covariance-eigenvectors",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "Appendix: SVD and covariance eigenvectors",
+    "text": "Appendix: SVD and covariance eigenvectors\n\\[\n\\frac{X_c^\\top X_c}{n-1} = V\\frac{\\Sigma^2}{n-1}V^\\top\n\\]\n\\[\n\\lambda_j = \\frac{\\sigma_j^2}{n-1}\n\\]\nThe right singular vectors are covariance eigenvectors. Singular values determine the variance along each component.\n\nOptional derivation for students with linear algebra. Substitute X_c=U Sigma V^T, use U^T U=I for reduced SVD, and identify eigenvalues/eigenvectors. This covariance is for the prepared and centered matrix. Feature transformations and scaling therefore matter."
+  },
+  {
+    "objectID": "slides.html#appendix-umap-layout-compactness",
+    "href": "slides.html#appendix-umap-layout-compactness",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "Appendix: UMAP layout compactness",
+    "text": "Appendix: UMAP layout compactness\n\nSaved UMAP runs with min_dist 0.1 and 0.8 while other main settings stay fixed.Compactness in the layout depends partly on the parameter choice.\n\nOptional sensitivity example using actual saved UMAP-js runs. Neither apparent density nor the size of a visual gap should be treated as a direct original-space measurement. Source: UMAP documentation and supplied run manifests."
+  },
+  {
+    "objectID": "slides.html#appendix-phate-diffusion-smoothing",
+    "href": "slides.html#appendix-phate-diffusion-smoothing",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "Appendix: PHATE diffusion smoothing",
+    "text": "Appendix: PHATE diffusion smoothing\n\nActual PHATE runs using t=2, automatic t, and t=30 with the same prepared Titanic features and survival colors.The diffusion scale changes which patterns remain visible.\n\nOptional. These are actual PHATE Python runs with knn=30 and smacof MDS. Small t retains more local variation, and larger t can oversmooth distinctions. The automatic value is data-adaptive. Diffusion time is not a passenger timestamp. Source: PHATE API and supplied runs."
+  },
+  {
+    "objectID": "slides.html#sources-and-run-details",
+    "href": "slides.html#sources-and-run-details",
+    "title": "Dimensionality Reduction for EDA",
+    "section": "Sources and run details",
+    "text": "Sources and run details\n\nscikit-learn PCA\nscikit-learn t-SNE\nUMAP documentation\nPHATE documentation\nMoon et al. (2019), Nature Biotechnology, doi:10.1038/s41587-019-0336-3\n\nThe website includes dataset preparation, exact settings, and saved-run provenance.\n\nReference only. Saved UMAP uses the official UMAP-js implementation and the recomputation notebook uses umap-learn. Python PCA/t-SNE and PHATE were executed during preparation. Changing method implementations or versions may change a layout. The Quarto source and source figures remain editable."
+  }
+]

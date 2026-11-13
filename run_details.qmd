@@ -1,0 +1,52 @@
+---
+title: "Data preparation and saved-run details"
+---
+
+## Titanic
+
+The 891 passenger records are the same seaborn example subset used in Day 1. This is not a complete passenger manifest. Embedding inputs are age, fare, siblings/spouses, parents/children, passenger class, recorded sex, and embarkation.
+
+- The four numerical fields use median imputation followed by standardization.
+- The three categorical fields use most-frequent imputation and full one-hot encoding.
+- The result has 12 feature columns, including redundant one-hot directions.
+- Survival and missingness indicators are excluded from the embedding inputs and retained as metadata.
+- All 891 people remain in every representation. Repeated feature profiles are not duplicate people and are not removed. PHATE uses `knn=30`, larger than the repeated-profile groups, without adding jitter.
+
+The geometry therefore reflects a specific weighting of numerical and categorical information. Fitting the preparation on all records is appropriate for this descriptive EDA exercise. It is not an evaluated predictive workflow.
+
+## Tornado practice
+
+The underlying dataset has 4,706 whole tracks, 2015-2018. The practice notebook takes a fixed sample of 700 with `random_state=386` and stable sorting by tornado ID.
+
+Inputs are standardized log1p length in miles, log1p width in yards, and start latitude/longitude. Geography and size both influence the representation. Euclidean distance on standardized latitude/longitude is an exploratory construction, not a precise geodesic-distance model.
+
+EF rating, month, start-state labels, injuries, and fatalities are withheld. Unknown EF ratings remain missing. All time fields use CST, and `start_state` identifies the beginning of a whole track, not every state affected.
+
+Raw snapshots, data dictionaries, and the Day 1 preparation script are included. See `data/SOURCES.md` and `data/data_dictionary.md` for units and provenance.
+
+## Main settings
+
+| Method | Settings |
+|---|---|
+| PCA | Two components, full SVD |
+| t-SNE | Perplexity 30, PCA initialization, automatic learning rate, 1,000 iterations, seed 42 |
+| UMAP reference | 15 neighbors, min_dist 0.1, 400 epochs, seeded JavaScript random generator |
+| PHATE | knn 30, automatic diffusion time, metric MDS with SMACOF, seed 42 |
+
+## Implementation and verification
+
+Saved PCA and t-SNE were computed using scikit-learn 1.8.0. Saved PHATE was computed with the upstream PHATE 2.0.0 Python source and graphtools 2.1.0 source. PHATE source commit: `65a1f73f0c53a65bf1f8db3d4ad32dbef73595c3`.
+
+Saved UMAP was computed with the official [UMAP-js implementation](https://github.com/PAIR-code/umap-js). Python UMAP and its compiled dependencies were unavailable in the authoring environment. The completed notebook includes ordinary `umap-learn` fitting code, but that recomputation branch was not executed here. Different implementations, optimizers, initializations, and versions can produce different layouts.
+
+The completed notebooks were executed in saved-run mode, the scaffold was checked without retaining outputs, and all saved coordinates were checked for shape, finite values, row identity, and prepared-feature alignment. PCA/t-SNE and PHATE fitting were also executed during coordinate generation. No simulated coordinates stand in for real method outputs.
+
+Each main run has a JSON manifest in `data/embeddings/` with settings and a prepared-matrix fingerprint. The loader checks rounded features and row IDs before loading the coordinates.
+
+The t-SNE random-initialization variant changes both initialization strategy and seed relative to the main PCA-initialized run. It is an alternative configuration, not a seed-only experiment. The UMAP seed variant holds its main settings fixed. The other displayed comparisons change the named parameter while keeping the preparation fixed.
+
+## Recompute deliberately
+
+Install the Python extras with `uv sync --extra recompute`, then set `RECOMPUTE = True` in a completed notebook. If changing preprocessing or a sample, fit new embeddings rather than loading the old cache. Preserve the record IDs with your new coordinates.
+
+The supplied Quarto sources are editable and the prebuilt `docs/` folder is ready to serve. Quarto itself was unavailable here, so a direct `quarto render` was not executed. An optional manual GitHub workflow is included to render the project and check its links on GitHub's runner before you publish changes.
